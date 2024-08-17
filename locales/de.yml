@@ -453,3 +453,27 @@ tools:
   text-to-binary:
     title: Text zu ASCII-Binär
     description: Konvertiere Text in seine ASCII-Binärrepräsentation und umgekehrt.
+  json-to-xml:
+    title: JSON zu XML
+    description: Konvertiere JSON in XML.
+    input-placeholder: Fügen Sie hier Ihren JSON-Inhalt ein ...
+    output-label: Konvertiertes XML
+    rule-message: Das bereitgestellte JSON ist ungültig.
+  xml-to-json:
+    title: XML zu JSON
+    description: Konvertiere XML in JSON.
+    input-label: Ihr XML-Inhalt
+    input-placeholder: Fügen Sie hier Ihren XML-Inhalt ein ...
+    output-label: Konvertiertes JSON
+  email-normalizer:
+    title: E-Mail-Normalisierung
+    description: >-
+      Normalisiere E-Mail-Adressen, indem du sie in ihre Grundform konvertierst.
+      Dies ist nützlich, wenn du E-Mail-Adressen in einer Datenbank speichern
+      möchtest.
+    raw: Rohe E-Mails zum Normalisieren
+    raw-placeholder: Geben Sie hier Ihre E-Mails ein (eine pro Zeile) …
+    normalized: Normalisierte E-Mails
+    normalized-placeholder: Normalisierte E-Mails werden hier angezeigt ...
+    clear: E-Mails löschen
+    copy: Normalisierte E-Mails kopieren
