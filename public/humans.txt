@@ -1,4 +1,8 @@
 /* TEAM */
+Maintainer: Jungley Yeh
+Contact: yejing@live.cn
+Site: https://github.com/jungley8
+
+/* ORIGINAL AUTHOR */
 Developer: Corentin Thomasset
 Site: https://github.com/CorentinTh
-Twitter: @cthmsst

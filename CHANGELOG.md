@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## Version 2026.10.31
+
+### Features
+- **i18n**: default to Chinese locale and complete translations
+- **branding**: custom site branding for it-tools.appio.fun
+- **seo**: automated sitemap generation with 88 routes and robots.txt
+- **docker**: automated multi-arch build and push to Aliyun container registry
+
 ## Version 2024.10.22-7ca5933
 
 ### Features
