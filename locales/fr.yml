@@ -1,3 +1,10 @@
+'404':
+  notFound: 404 Not Found
+  sorry: Désolé, cette page n'existe pas
+  maybe: >-
+    Peut-être que le cache fait des siennes, essayez de forcer le
+    rafraîchissement ?
+  backHome: Retour à l'accueil
 home:
   categories:
     newestTools: 'Les nouveaux outils'
@@ -7,8 +14,8 @@ home:
   subtitle: 'Outils pour les développeurs'
   toggleMenu: 'Menu'
   home: Accueil
-  uiLib: 'UI Lib'
-  buyMeACoffee: 'Soutenez IT-Tools'
+  uiLib: UI Lib
+  buyMeACoffee: Soutenez IT-Tools
   follow:
     title: 'Vous aimez it-tools ?'
     p1: 'Soutenez-nous avec une star sur'
@@ -36,35 +43,37 @@ about:
 
     ## Technologies
 
-    IT Tools est fait en Vue.js (Vue 3) avec la bibliothèque de composants Naive UI et est hébergé et déployé en continu par Vercel. Des bibliothèques open-source tierces sont utilisées dans certains outils, vous pouvez trouver la liste complète dans le fichier [package.json](https://github.com/CorentinTh/it-tools/blob/main/package.json) du dépôt.
+    IT Tools est fait en Vue.js (Vue 3) avec la bibliothèque de composants Naive
+    UI et est hébergé et déployé en continu par Vercel. Des bibliothèques
+    open-source tierces sont utilisées dans certains outils, vous pouvez trouver
+    la liste complète dans le fichier
+    [package.json](https://github.com/jungley8/it-tools/blob/main/package.json)
+    du dépôt.
 
     ## Vous avez trouvé un bug ? Un outil manque ?
 
-    Si vous avez besoin d'un outil qui n'est pas encore présent ici, et que vous pensez qu'il peut être utile, vous êtes invité à soumettre une demande de fonctionnalité dans la [section issue](https://github.com/CorentinTh/it-tools/issues/new/choose) du dépôt GitHub.
-
-404:
-  notFound: '404 Not Found'
-  sorry: "Désolé, cette page n'existe pas"
-  maybe: 'Peut-être que le cache fait des siennes, essayez de forcer le rafraîchissement ?'
-  backHome: "Retour à l'accueil"
+    Si vous avez besoin d'un outil qui n'est pas encore présent ici, et que vous
+    pensez qu'il peut être utile, vous êtes invité à soumettre une demande de
+    fonctionnalité dans la [section
+    issue](https://github.com/jungley8/it-tools/issues/new/choose) du dépôt
+    GitHub.
 toolCard:
   new: Nouveau
 search:
   label: Rechercher
 tools:
   categories:
-    favorite-tools: 'Vos outils favoris'
+    favorite-tools: Vos outils favoris
     crypto: Cryptographie
     converter: Convertisseur
     web: Web
-    images and videos: 'Images & Vidéos'
+    images and videos: Images & Vidéos
     development: Développement
     network: Réseau
     math: Math
     measurement: Mesure
     text: Texte
     data: Données
-
   token-generator:
     title: Générateur de token
     description: >-
@@ -80,3 +89,24 @@ tools:
     copied: Le token a été copié
     length: Longueur
     tokenPlaceholder: Le token...
+  json-to-xml:
+    title: JSON vers XML
+    description: Convertit du JSON en XML.
+    input-placeholder: Collez votre contenu JSON ici...
+    output-label: XML converti
+    rule-message: Le JSON fourni n'est pas valide.
+  xml-to-json:
+    title: XML vers JSON
+    description: Convertit du XML en JSON.
+    input-label: Votre contenu XML
+    input-placeholder: Collez votre contenu XML ici...
+    output-label: JSON converti
+  email-normalizer:
+    title: Normaliseur d'e-mails
+    description: Normalise les courriels.
+    raw: Courriels bruts à normaliser
+    raw-placeholder: Mettez vos emails ici (un par ligne)...
+    normalized: Courriels normalisés
+    normalized-placeholder: Les e-mails normalisés apparaîtront ici...
+    clear: Effacer les e-mails
+    copy: Copier les e-mails normalisés

@@ -1,3 +1,8 @@
+'404':
+  notFound: 404 Não Encontrado
+  sorry: Desculpe, parece que essa página não existe
+  maybe: Talvez o cache esteja fazendo bobagem, que tal tentar forçar a atualização?
+  backHome: Voltar para o início
 home:
   categories:
     newestTools: 'Novas ferramentas'
@@ -37,36 +42,61 @@ about:
 
     ## Tecnologias
 
-    O IT Tools é feito em Vue.js (Vue 3) com a biblioteca de componentes Naive UI e é hospedado pela Vercel. Bibliotecas de código aberto de terceiros são usadas em algumas ferramentas e você pode encontrar a lista completa no arquivo [package.json](https://github.com/CorentinTh/it-tools/blob/main/package.json) do repositório.
+    O IT Tools é feito em Vue.js (Vue 3) com a biblioteca de componentes Naive
+    UI e é hospedado pela Vercel. Bibliotecas de código aberto de terceiros são
+    usadas em algumas ferramentas e você pode encontrar a lista completa no
+    arquivo
+    [package.json](https://github.com/jungley8/it-tools/blob/main/package.json)
+    do repositório.
 
     ## Achou um bug? Está faltando uma ferramenta?
 
-    Se você precisa de uma ferramenta que ainda não existe aqui e acha que pode ser útil, seu pedido será bem vindo na [seção de issues](https://github.com/CorentinTh/it-tools/issues/new/choose) no repositório do GitHub.
+    Se você precisa de uma ferramenta que ainda não existe aqui e acha que pode
+    ser útil, seu pedido será bem vindo na [seção de
+    issues](https://github.com/jungley8/it-tools/issues/new/choose) no
+    repositório do GitHub.
 
-    E se você encontrar um bug ou se algo não funcionar como esperado, por favor registre um relato de bug na [seção de issues](https://github.com/CorentinTh/it-tools/issues/new/choose) no GitHub.
-
-404:
-  notFound: '404 Não Encontrado'
-  sorry: 'Desculpe, parece que essa página não existe'
-  maybe: 'Talvez o cache esteja fazendo bobagem, que tal tentar forçar a atualização?'
-  backHome: 'Voltar para o início'
+    E se você encontrar um bug ou se algo não funcionar como esperado, por favor
+    registre um relato de bug na [seção de
+    issues](https://github.com/jungley8/it-tools/issues/new/choose) no GitHub.
 favoriteButton:
-  remove: 'Remover dos favoritos'
-  add: 'Adicionar aos favoritos'
+  remove: Remover dos favoritos
+  add: Adicionar aos favoritos
 toolCard:
-  new: 'Novo'
+  new: Novo
 search:
-  label: 'Pesquisar'
+  label: Pesquisar
 tools:
   categories:
-    favorite-tools: 'Suas ferramentas favoritas'
-    crypto: 'Cripto'
-    converter: 'Conversores'
-    web: 'Web'
-    images and videos: 'Imagens & Vídeos'
-    development: 'Desenvolvimento'
-    network: 'Rede'
-    math: 'Matemática'
-    measurement: 'Medidas'
-    text: 'Texto'
-    data: 'Dados'
+    favorite-tools: Suas ferramentas favoritas
+    crypto: Cripto
+    converter: Conversores
+    web: Web
+    images and videos: Imagens & Vídeos
+    development: Desenvolvimento
+    network: Rede
+    math: Matemática
+    measurement: Medidas
+    text: Texto
+    data: Dados
+  json-to-xml:
+    title: Conversor JSON-XML
+    description: Converte um objeto JSON em um documento XML.
+    input-placeholder: Cole seu conteúdo JSON aqui...
+    output-label: XML convertido
+    rule-message: O JSON fornecido não é válido.
+  xml-to-json:
+    title: Conversor XML-JSON
+    description: Converte um documento XML em um objeto JSON.
+    input-label: Seu conteúdo XML
+    input-placeholder: Cole seu conteúdo XML aqui...
+    output-label: JSON convertido
+  email-normalizer:
+    title: Conversor de e-mails
+    description: Normaliza e-mails.
+    raw: E-mails brutos para normalizar
+    raw-placeholder: Coloque seus e-mails aqui (um por linha)...
+    normalized: E-mails normalizados
+    normalized-placeholder: E-mails normalizados aparecerão aqui...
+    clear: Limpar e-mails
+    copy: Copiar e-mails normalizados

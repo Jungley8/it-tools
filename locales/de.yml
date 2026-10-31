@@ -57,7 +57,7 @@ about:
     erstellt und wird von Vercel gehostet und kontinuierlich bereitgestellt. In
     einigen Tools werden Drittanbieter-Open-Source-Bibliotheken verwendet. Du
     findest die vollständige Liste in der
-    [package.json](https://github.com/CorentinTh/it-tools/blob/main/package.json)-Datei
+    [package.json](https://github.com/jungley8/it-tools/blob/main/package.json)-Datei
     des Repositorys.
 
     ## Einen Fehler gefunden? Ein Tool fehlt?
@@ -65,12 +65,12 @@ about:
     Wenn du ein Tool benötigst, das hier noch nicht vorhanden ist, und du
     denkst, dass es nützlich sein könnte, bist du herzlich eingeladen, einen
     Feature-Request im
-    [Issues-Bereich](https://github.com/CorentinTh/it-tools/issues/new/choose)
+    [Issues-Bereich](https://github.com/jungley8/it-tools/issues/new/choose)
     im GitHub-Repository einzureichen.
 
     Und wenn du einen Fehler gefunden hast oder etwas nicht wie erwartet
     funktioniert, melde bitte einen Fehler im
-    [Issues-Bereich](https://github.com/CorentinTh/it-tools/issues/new/choose)
+    [Issues-Bereich](https://github.com/jungley8/it-tools/issues/new/choose)
     im GitHub-Repository.
 favoriteButton:
   remove: Aus Favoriten entfernen
@@ -454,3 +454,27 @@ tools:
   text-to-binary:
     title: Text zu ASCII-Binär
     description: Konvertiere Text in seine ASCII-Binärrepräsentation und umgekehrt.
+  json-to-xml:
+    title: JSON zu XML
+    description: Konvertiere JSON in XML.
+    input-placeholder: Fügen Sie hier Ihren JSON-Inhalt ein ...
+    output-label: Konvertiertes XML
+    rule-message: Das bereitgestellte JSON ist ungültig.
+  xml-to-json:
+    title: XML zu JSON
+    description: Konvertiere XML in JSON.
+    input-label: Ihr XML-Inhalt
+    input-placeholder: Fügen Sie hier Ihren XML-Inhalt ein ...
+    output-label: Konvertiertes JSON
+  email-normalizer:
+    title: E-Mail-Normalisierung
+    description: >-
+      Normalisiere E-Mail-Adressen, indem du sie in ihre Grundform konvertierst.
+      Dies ist nützlich, wenn du E-Mail-Adressen in einer Datenbank speichern
+      möchtest.
+    raw: Rohe E-Mails zum Normalisieren
+    raw-placeholder: Geben Sie hier Ihre E-Mails ein (eine pro Zeile) …
+    normalized: Normalisierte E-Mails
+    normalized-placeholder: Normalisierte E-Mails werden hier angezeigt ...
+    clear: E-Mails löschen
+    copy: Normalisierte E-Mails kopieren
