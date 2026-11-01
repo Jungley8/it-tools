@@ -84,6 +84,10 @@ const tools = computed<ToolCategory[]>(() => [
             <c-link target="_blank" rel="noopener" href="https://github.com/jungley8">
               Jungley Yeh
             </c-link>
+            ·
+            <c-link target="_blank" rel="noopener" href="/sitemap.xml">
+              Sitemap
+            </c-link>
           </div>
         </div>
       </div>

@@ -1,3 +1,6 @@
 {
+  "redirects": [
+    { "source": "/sitemap", "destination": "/sitemap.xml", "permanent": true }
+  ],
   "routes": [{ "handle": "filesystem" }, { "src": "/(.*)", "dest": "/index.html" }]
 }

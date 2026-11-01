@@ -3,11 +3,11 @@ import { nextTick, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { config } from '@/config';
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
-    slotId?: string;
-    adFormat?: string;
-    fullWidthResponsive?: boolean;
+    slotId?: string
+    adFormat?: string
+    fullWidthResponsive?: boolean
   }>(),
   {
     slotId: '',
@@ -29,7 +29,8 @@ function pushAd() {
     try {
       const adsbygoogle = (window as unknown as { adsbygoogle?: Array<Record<string, unknown>> }).adsbygoogle || [];
       adsbygoogle.push({});
-    } catch {
+    }
+    catch {
       // Ignore if ads already pushed or blocked
     }
   });
