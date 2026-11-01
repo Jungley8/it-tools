@@ -2,6 +2,11 @@ import { tool as base64FileConverter } from './base64-file-converter';
 import { tool as base64StringConverter } from './base64-string-converter';
 import { tool as basicAuthGenerator } from './basic-auth-generator';
 import { tool as emailNormalizer } from './email-normalizer';
+import { tool as tokenCalculator } from './token-calculator';
+import { tool as promptRedactor } from './prompt-redactor';
+import { tool as webToLlmMarkdown } from './web-to-llm-markdown';
+import { tool as mcpToolGenerator } from './mcp-tool-generator';
+import { tool as codebaseContextPacker } from './codebase-context-packer';
 
 import { tool as asciiTextDrawer } from './ascii-text-drawer';
 
@@ -89,6 +94,16 @@ import { tool as xmlFormatter } from './xml-formatter';
 import { tool as yamlViewer } from './yaml-viewer';
 
 export const toolsByCategory: ToolCategory[] = [
+  {
+    name: 'AI',
+    components: [
+      tokenCalculator,
+      promptRedactor,
+      mcpToolGenerator,
+      codebaseContextPacker,
+      webToLlmMarkdown,
+    ],
+  },
   {
     name: 'Crypto',
     components: [tokenGenerator, hashText, bcrypt, uuidGenerator, ulidGenerator, cypher, bip39, hmacGenerator, rsaKeyPairGenerator, passwordStrengthAnalyser, pdfSignatureChecker],

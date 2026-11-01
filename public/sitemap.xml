@@ -85,6 +85,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://it-tools.appio.fun/codebase-context-packer</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://it-tools.appio.fun/color-converter</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -295,6 +301,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://it-tools.appio.fun/mcp-tool-generator</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://it-tools.appio.fun/mime-types</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -338,6 +350,12 @@
   </url>
   <url>
     <loc>https://it-tools.appio.fun/phone-parser-and-formatter</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://it-tools.appio.fun/prompt-redactor</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -445,6 +463,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://it-tools.appio.fun/token-calculator</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://it-tools.appio.fun/token-generator</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -488,6 +512,12 @@
   </url>
   <url>
     <loc>https://it-tools.appio.fun/uuid-generator</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://it-tools.appio.fun/web-to-llm-markdown</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

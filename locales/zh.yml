@@ -90,6 +90,7 @@ tools:
     measurement: 测量
     text: 文本
     data: 数据
+    ai: 人工智能与智能体
   password-strength-analyser:
     title: 密码强度分析仪
     description: 使用此密码强度分析器和破解时间估计工具来发现密码的强度。
@@ -366,3 +367,18 @@ tools:
   markdown-to-html:
     title: Markdown 转 HTML
     description: 将 Markdown 转换为 HTML，并支持打印（或另存为 PDF）。
+  token-calculator:
+    title: Token 估算与模型成本计算器
+    description: 实时估算提示词 Token 消耗、上下文窗口占比，并测算 GPT-4o、Claude 3.5、DeepSeek、Llama 等主流模型的 API 成本。
+  prompt-redactor:
+    title: AI 提问隐私脱敏与还原器
+    description: 向大模型提问前自动脱敏 API Key、邮箱、内网 IP、手机号等敏感凭证，并支持从 AI 回答中一键精准还原。
+  web-to-llm-markdown:
+    title: 网页 HTML 转纯净 LLM Markdown
+    description: 剔除网页源码中的样式脚本、SVG 与布局噪点，清洗为高信息密度且适配大模型上下文的干净 Markdown。
+  mcp-tool-generator:
+    title: MCP 契约与 Tool Calling 生成器
+    description: 可视化构建或根据示例 JSON 自动推断，一键生成 Anthropic MCP 工具契约、OpenAI 函数调用及 TypeScript Zod 校验定义。
+  codebase-context-packer:
+    title: 代码库上下文打包器 (Browser Repomix)
+    description: 将多个源代码文件与目录树打包为大模型偏好的 XML 或 Markdown 上下文格式，并即时估算总 Token 消耗。

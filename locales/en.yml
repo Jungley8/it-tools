@@ -79,6 +79,7 @@ tools:
     measurement: Measurement
     text: Text
     data: Data
+    ai: Artificial Intelligence
   password-strength-analyser:
     title: Password strength analyser
     description: >-
@@ -448,3 +449,18 @@ tools:
   markdown-to-html:
     title: Markdown to HTML
     description: Convert Markdown to Html and allow to print (as PDF)
+  token-calculator:
+    title: Token calculator & cost estimator
+    description: Estimate LLM tokens, context window usage, and API costs across GPT-4o, Claude 3.5, DeepSeek, and Llama.
+  prompt-redactor:
+    title: AI prompt secret redactor & restorer
+    description: Mask API keys, emails, IP addresses, and phone numbers before sending prompts to AI, with one-click restoration.
+  web-to-llm-markdown:
+    title: Web / HTML to clean LLM markdown
+    description: Strip bloated scripts, styles, SVGs, and layout noise from HTML into high-density clean Markdown for LLMs.
+  mcp-tool-generator:
+    title: MCP tool & function calling generator
+    description: Visually design or infer from JSON to generate Anthropic MCP tool schemas, OpenAI function calling, and Zod interfaces.
+  codebase-context-packer:
+    title: Codebase context packer
+    description: Pack multiple source files and folder structures into XML or Markdown context for LLM ingestion with token estimation.
