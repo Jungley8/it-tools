@@ -5,6 +5,7 @@ import { computed } from 'vue';
 import Draggable from 'vuedraggable';
 import ColoredCard from '../components/ColoredCard.vue';
 import ToolCard from '../components/ToolCard.vue';
+import GoogleAd from '../components/GoogleAd.vue';
 import { useToolStore } from '@/tools/tools.store';
 import { config } from '@/config';
 
@@ -74,6 +75,10 @@ function onUpdateFavoriteTools() {
         <div class="grid grid-cols-1 gap-12px lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4">
           <ToolCard v-for="tool in toolStore.newTools" :key="tool.name" :tool="tool" />
         </div>
+      </div>
+
+      <div class="my-6">
+        <GoogleAd :slot-id="config.googleAds.homePageSlot" />
       </div>
 
       <h3 class="mb-5px mt-25px text-neutral-400 font-500">

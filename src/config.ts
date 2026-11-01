@@ -65,6 +65,32 @@ export const config = figue({
     default: false,
     env: 'VITE_SHOW_SPONSOR_BANNER',
   },
+  googleAds: {
+    enabled: {
+      doc: 'Enable Google Ads',
+      format: 'boolean',
+      default: true,
+      env: 'VITE_GOOGLE_ADS_ENABLED',
+    },
+    client: {
+      doc: 'Google AdSense Client ID',
+      format: 'string',
+      default: 'ca-pub-2658825517759002',
+      env: 'VITE_GOOGLE_ADS_CLIENT',
+    },
+    toolPageSlot: {
+      doc: 'Google AdSense Slot ID for Tool Page Bottom',
+      format: 'string',
+      default: '',
+      env: 'VITE_GOOGLE_ADS_TOOL_SLOT',
+    },
+    homePageSlot: {
+      doc: 'Google AdSense Slot ID for Home Page',
+      format: 'string',
+      default: '',
+      env: 'VITE_GOOGLE_ADS_HOME_SLOT',
+    },
+  },
 })
   .loadEnv({
     ...import.meta.env,

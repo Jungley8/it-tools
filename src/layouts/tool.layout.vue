@@ -5,6 +5,8 @@ import type { HeadObject } from '@vueuse/head';
 
 import BaseLayout from './base.layout.vue';
 import FavoriteButton from '@/components/FavoriteButton.vue';
+import GoogleAd from '@/components/GoogleAd.vue';
+import { config } from '@/config';
 import type { Tool } from '@/tools/tools.types';
 
 const route = useRoute();
@@ -55,6 +57,10 @@ const toolDescription = computed<string>(() => t(`tools.${i18nKey.value}.descrip
     <div class="tool-content">
       <slot />
     </div>
+
+    <div class="tool-ad">
+      <GoogleAd :slot-id="config.googleAds.toolPageSlot" />
+    </div>
   </BaseLayout>
 </template>
 
@@ -70,6 +76,14 @@ const toolDescription = computed<string>(() => t(`tools.${i18nKey.value}.descrip
   ::v-deep(& > *) {
     flex: 0 1 600px;
   }
+}
+
+.tool-ad {
+  width: 100%;
+  max-width: 960px;
+  margin: 16px auto 0;
+  display: flex;
+  justify-content: center;
 }
 
 .tool-layout {
