@@ -29,6 +29,7 @@ home:
     twitterXAccount: 'IT-Tools X 账号'
     about: '关于 IT-Tools'
     aboutLabel: '关于'
+    webmcp: 'WebMCP 控制中心'
     darkMode: '深色模式'
     lightMode: '浅色模式'
     mode: '颜色模式'
@@ -382,3 +383,53 @@ tools:
   codebase-context-packer:
     title: 代码库上下文打包器 (Browser Repomix)
     description: 将多个源代码文件与目录树打包为大模型偏好的 XML 或 Markdown 上下文格式，并即时估算总 Token 消耗。
+  webmcp:
+    title: WebMCP 浏览器控制中心
+    description: 管理浏览器 WebMCP 工具契约，检查参数规范，执行在线调试演练，并导出场景画像配置。
+    status:
+      nativeSupported: 浏览器原生 ModelContext 接口生效
+      polyfilled: WebMCP 运行桥梁垫片就绪
+      postMessageActive: 窗口通信桥梁运行中
+      routeJitActive: 路由感知即时注入就绪
+      activeToolsCount: 当前活跃挂载工具
+      executableToolsCount: 支持纯函数直执工具
+      catalogCount: 全站收录工具总数
+    tabs:
+      inspector: 活跃工具与 JIT 状态
+      playground: 交互式调试演练场
+      profiles: 场景画像分包导出
+      directory: 全站工具目录
+    inspector:
+      jitNotice: WebMCP 采用路由感知即时注入与全局双阶发现架构，避免灌入全量工具导致模型上下文膨胀。
+      simulateRoute: 模拟切换工具路由
+      scopeGlobal: 全局元发现工具
+      scopeRoute: 当前路由即时注入
+      viewSchema: 查看参数规范
+      hideSchema: 收起规范
+      copySchema: 复制参数契约
+      schemaCopied: 工具参数契约已复制到剪贴板。
+    playground:
+      selectTool: 选择要调试的工具
+      inputArgs: 输入参数 (JSON 格式)
+      runButton: 运行 WebMCP 工具
+      executing: 正在执行...
+      executionResult: 执行结果输出
+      latency: 耗时
+      copyResult: 复制返回结果
+      resultCopied: 执行结果已复制到剪贴板。
+      invalidJson: 请输入有效的 JSON 格式参数。
+    profiles:
+      title: 预制场景画像分包
+      subtitle: 导出适用于主流 AI 工具与桌面端的就绪配置文件。
+      formatLabel: 目标平台格式
+      copyConfig: 复制配置内容
+      configCopied: 配置文件内容已复制到剪贴板。
+    directory:
+      searchPlaceholder: 输入关键词、用途或分类进行检索...
+      allCategories: 全部分类
+      executableOnly: 仅看支持纯函数直执
+      executableBadge: 支持直执
+      catalogBadge: 页面交互
+      openPlayground: 在演练场调试
+      openPage: 打开工具页面
+

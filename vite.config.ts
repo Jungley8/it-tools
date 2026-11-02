@@ -108,6 +108,7 @@ export default defineConfig({
     'import.meta.env.PACKAGE_VERSION': JSON.stringify(process.env.npm_package_version),
   },
   test: {
+    environment: 'jsdom',
     exclude: [...configDefaults.exclude, '**/*.e2e.spec.ts'],
   },
   build: {

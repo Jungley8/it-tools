@@ -2,6 +2,7 @@ import { tool as base64FileConverter } from './base64-file-converter';
 import { tool as base64StringConverter } from './base64-string-converter';
 import { tool as basicAuthGenerator } from './basic-auth-generator';
 import { tool as emailNormalizer } from './email-normalizer';
+import { tool as webmcp } from './webmcp';
 import { tool as tokenCalculator } from './token-calculator';
 import { tool as promptRedactor } from './prompt-redactor';
 import { tool as webToLlmMarkdown } from './web-to-llm-markdown';
@@ -97,6 +98,7 @@ export const toolsByCategory: ToolCategory[] = [
   {
     name: 'AI',
     components: [
+      webmcp,
       tokenCalculator,
       promptRedactor,
       mcpToolGenerator,

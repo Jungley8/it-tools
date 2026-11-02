@@ -29,6 +29,7 @@ home:
     twitterXAccount: 'IT Tools X account'
     about: 'About  IT-Tools'
     aboutLabel: 'About'
+    webmcp: 'WebMCP Control Center'
     darkMode: 'Dark mode'
     lightMode: 'Light mode'
     mode: 'Toggle dark/light mode'
@@ -464,3 +465,53 @@ tools:
   codebase-context-packer:
     title: Codebase context packer
     description: Pack multiple source files and folder structures into XML or Markdown context for LLM ingestion with token estimation.
+  webmcp:
+    title: WebMCP Control Center
+    description: Control browser WebMCP tools, inspect schemas, run interactive tests, and export configuration packs.
+    status:
+      nativeSupported: Browser ModelContext API Active
+      polyfilled: WebMCP Bridge Shim Active
+      postMessageActive: Window PostMessage Bridge Active
+      routeJitActive: Route-Scoped JIT Injection Active
+      activeToolsCount: Active Exposed Tools
+      executableToolsCount: Directly Executable Tools
+      catalogCount: Tools in Catalog
+    tabs:
+      inspector: Active Tools & JIT
+      playground: Interactive Playground
+      profiles: Profile Packs & Export
+      directory: Tools Directory
+    inspector:
+      jitNotice: WebMCP uses route-scoped JIT injection and two-stage discovery to prevent context token bloat.
+      simulateRoute: Simulate Route Switch
+      scopeGlobal: Global Meta-Tool
+      scopeRoute: Route-Scoped Tool
+      viewSchema: View Schema
+      hideSchema: Hide Schema
+      copySchema: Copy Schema
+      schemaCopied: Tool schema copied to clipboard.
+    playground:
+      selectTool: Select Tool
+      inputArgs: Input Arguments (JSON)
+      runButton: Run Tool via WebMCP
+      executing: Executing...
+      executionResult: Execution Result
+      latency: Latency
+      copyResult: Copy Result
+      resultCopied: Result copied to clipboard.
+      invalidJson: Enter valid JSON input.
+    profiles:
+      title: Pre-configured Profile Packs
+      subtitle: Export ready-to-use configuration files for your AI assistant.
+      formatLabel: Target Platform
+      copyConfig: Copy Configuration
+      configCopied: Configuration copied to clipboard.
+    directory:
+      searchPlaceholder: Search tools by keyword or task...
+      allCategories: All Categories
+      executableOnly: Directly Executable Only
+      executableBadge: Directly Executable
+      catalogBadge: Web Page
+      openPlayground: Run in Playground
+      openPage: Open Tool
+

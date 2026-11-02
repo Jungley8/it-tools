@@ -13,8 +13,15 @@ import { naive } from './plugins/naive.plugin';
 import App from './App.vue';
 import router from './router';
 import { i18nPlugin } from './plugins/i18n.plugin';
+import { installWebMCPBridge } from './modules/webmcp/webmcp-bridge';
+import { webmcpRegistry } from './modules/webmcp/webmcp.service';
 
 registerSW();
+installWebMCPBridge();
+
+router.afterEach((to) => {
+  webmcpRegistry.setRoute(to.path);
+});
 
 const app = createApp(App);
 
