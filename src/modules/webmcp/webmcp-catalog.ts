@@ -50,12 +50,17 @@ export function searchCatalogTools(
       return true;
     }
 
-    const matchName = tool.name.toLowerCase().includes(q);
-    const matchTitle = tool.title.toLowerCase().includes(q);
-    const matchDesc = tool.description.toLowerCase().includes(q);
-    const matchCategory = tool.category.toLowerCase().includes(q);
-    const matchKeyword = tool.keywords.some(k => k.toLowerCase().includes(q));
+    const terms = q.split(/\s+/).filter(Boolean);
+    if (terms.length === 0) {
+      return true;
+    }
 
-    return matchName || matchTitle || matchDesc || matchCategory || matchKeyword;
+    return terms.every(term =>
+      tool.name.toLowerCase().includes(term)
+      || tool.title.toLowerCase().includes(term)
+      || tool.description.toLowerCase().includes(term)
+      || tool.category.toLowerCase().includes(term)
+      || tool.keywords.some(k => k.toLowerCase().includes(term)),
+    );
   });
 }

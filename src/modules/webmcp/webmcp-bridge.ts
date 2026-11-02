@@ -1,4 +1,5 @@
 import { webmcpRegistry } from './webmcp.service';
+import { searchCatalogTools } from './webmcp-catalog';
 import type { WebMCPBridgeRequest, WebMCPGlobalApi, WebMCPTool } from './webmcp.types';
 
 let bridgeInstalled = false;
@@ -7,9 +8,39 @@ export function isNativeModelContextSupported(): boolean {
   if (typeof window === 'undefined') {
     return false;
   }
-  const hasNav = typeof navigator !== 'undefined' && 'modelContext' in navigator;
-  const hasDoc = typeof document !== 'undefined' && 'modelContext' in document;
-  return Boolean(hasNav || hasDoc);
+  const navMc = typeof navigator !== 'undefined' ? (navigator as any).modelContext : undefined;
+  const docMc = typeof document !== 'undefined' ? (document as any).modelContext : undefined;
+  const isNavNative = Boolean(navMc && !navMc.isShim && !navMc[Symbol.for('webmcp.shim')]);
+  const isDocNative = Boolean(docMc && !docMc.isShim && !docMc[Symbol.for('webmcp.shim')]);
+  return isNavNative || isDocNative;
+}
+
+export function syncWithNativeModelContext(tools: Array<Omit<WebMCPTool, 'execute'>>) {
+  if (typeof document === 'undefined') {
+    return;
+  }
+  const mc = (document as any).modelContext ?? (typeof navigator !== 'undefined' ? (navigator as any).modelContext : null);
+  if (!mc || mc.isShim || mc[Symbol.for('webmcp.shim')]) {
+    return;
+  }
+  if (typeof mc.registerTool === 'function') {
+    for (const tool of tools) {
+      const fullTool = webmcpRegistry.getTool(tool.name);
+      if (fullTool) {
+        try {
+          mc.registerTool({
+            name: fullTool.name,
+            description: fullTool.description,
+            inputSchema: fullTool.inputSchema,
+            execute: fullTool.execute,
+          });
+        }
+        catch {
+          // ignore registration errors from native engine
+        }
+      }
+    }
+  }
 }
 
 export function installWebMCPBridge(): WebMCPGlobalApi | null {
@@ -27,6 +58,7 @@ export function installWebMCPBridge(): WebMCPGlobalApi | null {
     version: '1.0.0',
     isNativeSupported: isNative,
     listTools: () => webmcpRegistry.getActiveTools(),
+    searchTools: (query, options) => searchCatalogTools(query, options),
     getAllToolsSummary: () => webmcpRegistry.getAllToolsSummary(),
     getTool: (name: string) => webmcpRegistry.getTool(name),
     callTool: (name: string, args?: Record<string, any>) => webmcpRegistry.callTool(name, args ?? {}),
@@ -41,10 +73,19 @@ export function installWebMCPBridge(): WebMCPGlobalApi | null {
 
   // Polyfill navigator.modelContext & document.modelContext if not present
   const modelContextShim = {
-    registerTool: (tool: any) => webmcpRegistry.registerTool(tool),
-    unregisterTool: (name: string) => webmcpRegistry.unregisterTool(name),
-    listTools: () => webmcpRegistry.getActiveTools(),
-    callTool: (name: string, args: any) => webmcpRegistry.callTool(name, args),
+    isShim: true,
+    [Symbol.for('webmcp.shim')]: true,
+    registerTool: async (tool: any) => {
+      webmcpRegistry.registerTool(tool);
+    },
+    unregisterTool: async (name: string) => {
+      return webmcpRegistry.unregisterTool(name);
+    },
+    getTools: async () => webmcpRegistry.getActiveTools(),
+    listTools: async () => webmcpRegistry.getActiveTools(),
+    callTool: async (name: string, args?: any) => webmcpRegistry.callTool(name, args),
+    executeTool: async (name: string, args?: any) => webmcpRegistry.callTool(name, args),
+    getTool: (name: string) => webmcpRegistry.getTool(name),
     addEventListener: (event: string, cb: any) => window.addEventListener(`webmcp:${event}`, cb),
     removeEventListener: (event: string, cb: any) => window.removeEventListener(`webmcp:${event}`, cb),
   };
@@ -76,8 +117,8 @@ export function installWebMCPBridge(): WebMCPGlobalApi | null {
       return;
     }
 
-    const target = event.source as Window | null;
-    const origin = event.origin || '*';
+    const target = (event.source as Window | null) ?? (typeof window !== 'undefined' ? window : null);
+    const origin = (event.origin && event.origin !== 'null') ? event.origin : '*';
 
     switch (data.type) {
       case 'webmcp:ping': {
@@ -88,6 +129,22 @@ export function installWebMCPBridge(): WebMCPGlobalApi | null {
       case 'webmcp:list_tools': {
         const tools = webmcpRegistry.getActiveTools();
         target?.postMessage({ type: 'webmcp:list_tools_response', id: data.id, tools }, origin);
+        break;
+      }
+
+      case 'webmcp:search_tools': {
+        const query = data.query ?? '';
+        const searchRes = await webmcpRegistry.callTool('search_tools', { query, ...(data.arguments ?? {}) });
+        target?.postMessage(
+          {
+            type: 'webmcp:search_tools_response',
+            id: data.id,
+            ok: searchRes.ok,
+            result: searchRes.result,
+            error: searchRes.error,
+          },
+          origin,
+        );
         break;
       }
 
@@ -118,6 +175,10 @@ export function installWebMCPBridge(): WebMCPGlobalApi | null {
   };
 
   window.addEventListener('message', handlePostMessage);
+
+  // Sync to native modelContext if supported
+  webmcpRegistry.onToolsChanged(syncWithNativeModelContext);
+  syncWithNativeModelContext(webmcpRegistry.getActiveTools());
 
   // Broadcast tools change to both postMessage and DOM CustomEvent
   webmcpRegistry.onToolsChanged((tools) => {

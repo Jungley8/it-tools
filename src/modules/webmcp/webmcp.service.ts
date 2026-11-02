@@ -97,9 +97,12 @@ export class WebMCPRegistry {
         arguments: { quantity: 2, version: 'v4' },
       },
       execute: async (args) => {
-        const toolName = String(args.toolName ?? '');
+        const toolName = String(args.toolName ?? '').trim();
         if (!toolName) {
           throw new Error('Input parameter toolName must not be empty.');
+        }
+        if (toolName === 'execute_tool') {
+          throw new Error('Cannot execute execute_tool recursively.');
         }
         const toolArgs = (args.arguments ?? {}) as Record<string, any>;
         const result = await this.callTool(toolName, toolArgs);
@@ -199,10 +202,20 @@ export class WebMCPRegistry {
 
     if (!tool) {
       const duration = typeof performance !== 'undefined' ? performance.now() - startTime : Date.now() - startTime;
+      const catalog = this.getAllToolsSummary();
+      const normalizedName = name.toLowerCase().replace(/[-_]/g, '');
+      const catalogTool = catalog.find(
+        t => t.name.toLowerCase().replace(/[-_]/g, '') === normalizedName
+          || t.path.replace(/^\//, '').replace(/[-_]/g, '') === normalizedName,
+      );
+      let errorMsg = `Tool '${name}' not found. Use search_tools to list available tools.`;
+      if (catalogTool && !catalogTool.isDirectlyExecutable) {
+        errorMsg = `Tool '${name}' is available as an interactive web tool at '${catalogTool.path}', but is not directly executable in headless mode. Set directlyExecutableOnly: true in search_tools to find executable tools.`;
+      }
       return {
         tool: name,
         ok: false,
-        error: `Tool '${name}' not found. Use search_tools to list available tools.`,
+        error: errorMsg,
         executionTimeMs: Math.round(duration),
       };
     }

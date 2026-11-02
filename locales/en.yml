@@ -469,10 +469,12 @@ tools:
     title: WebMCP Control Center
     description: Control browser WebMCP tools, inspect schemas, run interactive tests, and export configuration packs.
     status:
-      nativeSupported: Browser ModelContext API Active
-      polyfilled: WebMCP Bridge Shim Active
-      postMessageActive: Window PostMessage Bridge Active
-      routeJitActive: Route-Scoped JIT Injection Active
+      nativeSupported: ModelContext Status
+      nativeActive: Native ModelContext
+      shimActive: WebMCP Shim Active
+      postMessageActive: Window PostMessage Bridge
+      bridgeActive: Bridge Active
+      routeJitActive: Route-Scoped JIT
       activeToolsCount: Active Exposed Tools
       executableToolsCount: Directly Executable Tools
       catalogCount: Tools in Catalog

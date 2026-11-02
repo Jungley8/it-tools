@@ -184,9 +184,11 @@ export const coreExecutableTools: WebMCPTool[] = [
     execute(args) {
       const name = String(args.name ?? 'custom_tool');
       const description = String(args.description ?? '');
-      const sampleJson = String(args.sampleJson ?? '{}');
+      const sampleJsonStr = typeof args.sampleJson === 'object' && args.sampleJson !== null
+        ? JSON.stringify(args.sampleJson)
+        : String(args.sampleJson ?? '{}');
       const format = String(args.format ?? 'mcp').toLowerCase();
-      const parameters = inferParametersFromJson(sampleJson);
+      const parameters = inferParametersFromJson(sampleJsonStr);
 
       const contract = {
         name,
@@ -245,9 +247,16 @@ export const coreExecutableTools: WebMCPTool[] = [
       ],
     },
     execute(args) {
-      const files = Array.isArray(args.files) ? args.files : [];
+      const rawFiles = Array.isArray(args.files) ? args.files : [];
+      const files = rawFiles
+        .filter((f: any) => f && (f.path || f.name || f.filename))
+        .map((f: any) => ({
+          path: String(f.path || f.name || f.filename),
+          content: String(f.content ?? f.code ?? ''),
+        }));
+
       if (files.length === 0) {
-        throw new Error('Input files array must contain at least one file.');
+        throw new Error('Input files array must contain at least one valid file with path and content.');
       }
       return packCodebase(files, {
         format: args.format === 'markdown' ? 'markdown' : 'xml',
@@ -292,21 +301,36 @@ export const coreExecutableTools: WebMCPTool[] = [
     },
     execute(args) {
       const text = String(args.text ?? '');
-      const algoName = (args.algorithm ?? 'SHA256') as keyof typeof hashAlgorithms;
-      const encoding = String(args.encoding ?? 'Hex');
+      const rawAlgo = String(args.algorithm ?? 'SHA256').toUpperCase().replace(/[-_]/g, '');
+      const algoMap: Record<string, keyof typeof hashAlgorithms> = {
+        MD5: 'MD5',
+        SHA1: 'SHA1',
+        SHA256: 'SHA256',
+        SHA512: 'SHA512',
+        SHA224: 'SHA224',
+        SHA384: 'SHA384',
+        SHA3: 'SHA3',
+        RIPEMD160: 'RIPEMD160',
+      };
+
+      const algoName = algoMap[rawAlgo];
+      if (!algoName) {
+        throw new Error(`Unsupported algorithm: ${args.algorithm}`);
+      }
 
       const hasher = hashAlgorithms[algoName];
-      if (!hasher) {
-        throw new Error(`Unsupported algorithm: ${algoName}`);
-      }
+      const rawEnc = String(args.encoding ?? 'Hex').toLowerCase();
 
       const words = hasher(text);
       let digest = '';
-      if (encoding === 'Bin') {
+      let encoding = 'Hex';
+      if (rawEnc === 'bin' || rawEnc === 'binary') {
         digest = convertHexToBin(words.toString(enc.Hex));
+        encoding = 'Bin';
       }
-      else if (encoding === 'Base64') {
+      else if (rawEnc === 'base64') {
         digest = words.toString(enc.Base64);
+        encoding = 'Base64';
       }
       else {
         digest = words.toString(enc.Hex);
@@ -396,8 +420,10 @@ export const coreExecutableTools: WebMCPTool[] = [
       quantity: 3,
     },
     execute(args) {
-      const version = String(args.version ?? 'v4');
-      const quantity = Math.min(Math.max(Number(args.quantity ?? 1), 1), 50);
+      const rawVer = String(args.version ?? 'v4').toLowerCase();
+      const version = rawVer === 'v1' || rawVer === '1' ? 'v1' : rawVer === 'nil' || rawVer === 'null' ? 'NIL' : 'v4';
+      const parsedQty = Number(args.quantity);
+      const quantity = Number.isFinite(parsedQty) ? Math.min(Math.max(Math.floor(parsedQty), 1), 50) : 1;
 
       const generateOne = (): string => {
         if (version === 'v1') {
@@ -447,7 +473,15 @@ export const coreExecutableTools: WebMCPTool[] = [
     },
     execute(args) {
       const text = String(args.text ?? '');
-      const targetCase = String(args.targetCase ?? 'all').toLowerCase();
+      const rawTarget = String(args.targetCase ?? 'all').toLowerCase().replace(/[-_]/g, '');
+      const caseAliasMap: Record<string, string> = {
+        camelcase: 'camel',
+        snakecase: 'snake',
+        kebabcase: 'kebab',
+        pascalcase: 'pascal',
+        constantcase: 'constant',
+      };
+      const targetCase = caseAliasMap[rawTarget] ?? rawTarget;
 
       const results = {
         camel: camelCase(text),
@@ -528,6 +562,16 @@ export const coreExecutableTools: WebMCPTool[] = [
       json: '{\n  "title": "IT-Tools",\n  "status": "ready"\n}',
     },
     execute(args) {
+      if (typeof args.json === 'object' && args.json !== null) {
+        const minified = JSON.stringify(args.json);
+        const originalStr = JSON.stringify(args.json, null, 2);
+        return {
+          minified,
+          originalLength: originalStr.length,
+          minifiedLength: minified.length,
+          savedBytes: originalStr.length - minified.length,
+        };
+      }
       const raw = String(args.json ?? '');
       if (!raw.trim()) {
         throw new Error('Input parameter json must not be empty.');
@@ -564,7 +608,8 @@ export const coreExecutableTools: WebMCPTool[] = [
       quantity: 3,
     },
     execute(args) {
-      const count = Math.min(Math.max(Number(args.quantity ?? 1), 1), 20);
+      const parsedQty = Number(args.quantity);
+      const count = Number.isFinite(parsedQty) ? Math.min(Math.max(Math.floor(parsedQty), 1), 20) : 1;
       const ports = Array.from({ length: count }, () => generatePort());
       return {
         ports,

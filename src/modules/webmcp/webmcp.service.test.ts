@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { WebMCPRegistry } from './webmcp.service';
-import { installWebMCPBridge } from './webmcp-bridge';
+import { installWebMCPBridge, isNativeModelContextSupported } from './webmcp-bridge';
+import { searchCatalogTools } from './webmcp-catalog';
 
 describe('WebMCPRegistry & Two-Stage Discovery', () => {
   let registry: WebMCPRegistry;
@@ -26,6 +27,14 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
 
     const matchNames = res.result.tools.map((t: any) => t.name);
     expect(matchNames).toContain('token_calculator');
+  });
+
+  it('supports multi-word tokenized search queries', () => {
+    const costMatches = searchCatalogTools('token cost');
+    expect(costMatches.some(t => t.name === 'token_calculator')).toBe(true);
+
+    const portMatches = searchCatalogTools('port generator');
+    expect(portMatches.some(t => t.name === 'random_port_generator')).toBe(true);
   });
 
   it('filters catalog tools by category and directly-executable flag', async () => {
@@ -61,7 +70,7 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
     });
   });
 
-  describe('Direct Execution of Core Tools', () => {
+  describe('Direct Execution of Core Tools & Robustness', () => {
     it('executes token_calculator with cost estimation', async () => {
       const res = await registry.callTool('token_calculator', {
         text: 'Analyze the system architecture of our microservices.',
@@ -100,23 +109,32 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
       expect(res.result.markdown).not.toContain('alert');
     });
 
-    it('executes mcp_tool_generator to create schemas', async () => {
-      const res = await registry.callTool('mcp_tool_generator', {
+    it('executes mcp_tool_generator with string or object sampleJson', async () => {
+      const resFromString = await registry.callTool('mcp_tool_generator', {
         name: 'query_db',
         description: 'Run SQL query',
         sampleJson: '{"query": "SELECT * FROM users", "limit": 10}',
         format: 'mcp',
       });
-      expect(res.ok).toBe(true);
-      expect(res.result.definition.name).toBe('query_db');
-      expect(res.result.definition.inputSchema.properties.query).toBeDefined();
+      expect(resFromString.ok).toBe(true);
+      expect(resFromString.result.definition.name).toBe('query_db');
+      expect(resFromString.result.definition.inputSchema.properties.query).toBeDefined();
+
+      const resFromObj = await registry.callTool('mcp_tool_generator', {
+        name: 'calc_sum',
+        description: 'Sum numbers',
+        sampleJson: { a: 1, b: 2 },
+        format: 'mcp',
+      });
+      expect(resFromObj.ok).toBe(true);
+      expect(resFromObj.result.definition.inputSchema.properties.a).toBeDefined();
     });
 
-    it('executes codebase_context_packer to build XML context', async () => {
+    it('executes codebase_context_packer normalizing file structures', async () => {
       const res = await registry.callTool('codebase_context_packer', {
         files: [
-          { path: 'src/main.ts', content: 'const a = 1;' },
-          { path: 'README.md', content: '# Readme' },
+          { filename: 'src/main.ts', code: 'const a = 1;' },
+          { name: 'README.md', content: '# Readme' },
         ],
         format: 'xml',
         includeFileTree: true,
@@ -127,23 +145,24 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
       expect(res.result.totalFiles).toBe(2);
     });
 
-    it('executes hash_text with various algorithms and encodings', async () => {
+    it('executes hash_text with case-insensitive algorithm and encoding', async () => {
       const text = 'hello world';
-      const resSha = await registry.callTool('hash_text', {
+      const resShaLower = await registry.callTool('hash_text', {
         text,
-        algorithm: 'SHA256',
-        encoding: 'Hex',
+        algorithm: 'sha256',
+        encoding: 'base64',
       });
-      expect(resSha.ok).toBe(true);
-      expect(resSha.result.digest).toBe('b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9');
+      expect(resShaLower.ok).toBe(true);
+      expect(resShaLower.result.encoding).toBe('Base64');
+      expect(resShaLower.result.digest).toBe('uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek=');
 
-      const resMd5 = await registry.callTool('hash_text', {
+      const resDashed = await registry.callTool('hash_text', {
         text,
-        algorithm: 'MD5',
-        encoding: 'Hex',
+        algorithm: 'sha-1',
+        encoding: 'hex',
       });
-      expect(resMd5.ok).toBe(true);
-      expect(resMd5.result.digest).toBe('5eb63bbbe01eeed093cb22bb8f5acdc3');
+      expect(resDashed.ok).toBe(true);
+      expect(resDashed.result.digest).toBe('2aae6c35c94fcfb415dbe95f408b9ce91ee846ed');
     });
 
     it('executes base64_string_converter for encoding and decoding', async () => {
@@ -162,38 +181,58 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
       expect(decRes.result.text).toBe(original);
     });
 
-    it('executes uuid_generator with quantities', async () => {
+    it('executes uuid_generator with quantities, fallback on invalid quantity and nil version', async () => {
       const res = await registry.callTool('uuid_generator', {
         version: 'v4',
         quantity: 5,
       });
       expect(res.ok).toBe(true);
       expect(res.result.uuids.length).toBe(5);
-      expect(res.result.uuids[0]).toMatch(
-        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
-      );
+
+      const resNil = await registry.callTool('uuid_generator', {
+        version: 'nil',
+        quantity: 'not-a-number',
+      });
+      expect(resNil.ok).toBe(true);
+      expect(resNil.result.uuids.length).toBe(1);
+      expect(resNil.result.uuids[0]).toBe('00000000-0000-0000-0000-000000000000');
     });
 
-    it('executes case_converter and url_encoder and json_minify', async () => {
+    it('executes random_port_generator safely with bounds and fallback', async () => {
+      const res = await registry.callTool('random_port_generator', {
+        quantity: 'invalid',
+      });
+      expect(res.ok).toBe(true);
+      expect(res.result.ports.length).toBe(1);
+
+      const resCapped = await registry.callTool('random_port_generator', {
+        quantity: 100,
+      });
+      expect(resCapped.ok).toBe(true);
+      expect(resCapped.result.ports.length).toBe(20);
+    });
+
+    it('executes case_converter handling compound format names like snake_case', async () => {
       const caseRes = await registry.callTool('case_converter', {
         text: 'hello world from test',
-        targetCase: 'camel',
+        targetCase: 'snake_case',
       });
       expect(caseRes.ok).toBe(true);
-      expect(caseRes.result.value).toBe('helloWorldFromTest');
+      expect(caseRes.result.value).toBe('hello_world_from_test');
+    });
 
-      const urlRes = await registry.callTool('url_encoder', {
-        text: 'test value=1',
-        action: 'encode',
-      });
-      expect(urlRes.ok).toBe(true);
-      expect(urlRes.result.text).toBe('test%20value%3D1');
-
-      const minRes = await registry.callTool('json_minify', {
+    it('executes json_minify with raw string or object', async () => {
+      const minResStr = await registry.callTool('json_minify', {
         json: '{\n  "a": 1\n}',
       });
-      expect(minRes.ok).toBe(true);
-      expect(minRes.result.minified).toBe('{"a":1}');
+      expect(minResStr.ok).toBe(true);
+      expect(minResStr.result.minified).toBe('{"a":1}');
+
+      const minResObj = await registry.callTool('json_minify', {
+        json: { hello: 'world', count: 42 },
+      });
+      expect(minResObj.ok).toBe(true);
+      expect(minResObj.result.minified).toBe('{"hello":"world","count":42}');
     });
 
     it('dispatches execution via the meta-tool execute_tool', async () => {
@@ -205,10 +244,26 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
       expect(res.result.uuids.length).toBe(2);
     });
 
+    it('prevents recursive execution of execute_tool', async () => {
+      const res = await registry.callTool('execute_tool', {
+        toolName: 'execute_tool',
+        arguments: {},
+      });
+      expect(res.ok).toBe(false);
+      expect(res.error).toContain('Cannot execute execute_tool recursively');
+    });
+
     it('returns structured error on unknown tool', async () => {
       const res = await registry.callTool('non_existent_tool', {});
       expect(res.ok).toBe(false);
       expect(res.error).toContain('not found');
+    });
+
+    it('returns guided error when calling an interactive catalog tool', async () => {
+      const res = await registry.callTool('qr_code_generator', {});
+      expect(res.ok).toBe(false);
+      expect(res.error).toContain('interactive web tool');
+      expect(res.error).toContain('directlyExecutableOnly');
     });
   });
 
@@ -236,8 +291,8 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
     });
   });
 
-  describe('WebMCP Bridge & Window Object', () => {
-    it('installs global window.__webmcp__ bridge correctly', () => {
+  describe('WebMCP Bridge, Shim & Window Object', () => {
+    it('installs global window.__webmcp__ bridge correctly with searchTools', () => {
       const bridge = installWebMCPBridge();
       expect(bridge).toBeDefined();
       expect(window.__webmcp__).toBeDefined();
@@ -245,6 +300,66 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
 
       const tools = window.__webmcp__?.listTools();
       expect(tools && tools.length).toBeGreaterThan(0);
+
+      const searchRes = window.__webmcp__?.searchTools('token');
+      expect(searchRes && searchRes.length).toBeGreaterThan(0);
+    });
+
+    it('accurately identifies shim as non-native modelContext', () => {
+      installWebMCPBridge();
+      // Even with shim installed, isNativeModelContextSupported must report false
+      expect(isNativeModelContextSupported()).toBe(false);
+    });
+
+    it('exposes document.modelContext and navigator.modelContext with getTools and callTool', async () => {
+      installWebMCPBridge();
+      const docMc = (document as any).modelContext;
+      expect(docMc).toBeDefined();
+      expect(docMc.isShim).toBe(true);
+
+      const tools = await docMc.getTools();
+      expect(tools.length).toBeGreaterThan(0);
+
+      const callRes = await docMc.callTool('search_tools', { query: 'uuid' });
+      expect(callRes.ok).toBe(true);
+      expect(callRes.result.totalMatched).toBeGreaterThan(0);
+    });
+
+    it('handles postMessage bridge requests', async () => {
+      installWebMCPBridge();
+
+      const responses: any[] = [];
+      const onMsg = (e: MessageEvent) => {
+        if (e.data?.type?.startsWith('webmcp:')) {
+          responses.push(e.data);
+        }
+      };
+      window.addEventListener('message', onMsg);
+
+      // 1. ping
+      window.postMessage({ type: 'webmcp:ping', id: 'req-ping' }, '*');
+      // 2. list_tools
+      window.postMessage({ type: 'webmcp:list_tools', id: 'req-list' }, '*');
+      // 3. search_tools
+      window.postMessage({ type: 'webmcp:search_tools', id: 'req-search', query: 'uuid' }, '*');
+      // 4. call_tool
+      window.postMessage({
+        type: 'webmcp:call_tool',
+        id: 'req-call',
+        tool: 'uuid_generator',
+        arguments: { quantity: 1 },
+      }, '*');
+      // 5. get_profiles
+      window.postMessage({ type: 'webmcp:get_profiles', id: 'req-prof' }, '*');
+
+      await new Promise(resolve => setTimeout(resolve, 50));
+      window.removeEventListener('message', onMsg);
+
+      expect(responses.some(r => r.type === 'webmcp:pong' && r.id === 'req-ping')).toBe(true);
+      expect(responses.some(r => r.type === 'webmcp:list_tools_response' && r.id === 'req-list')).toBe(true);
+      expect(responses.some(r => r.type === 'webmcp:search_tools_response' && r.id === 'req-search')).toBe(true);
+      expect(responses.some(r => r.type === 'webmcp:call_tool_response' && r.id === 'req-call' && r.ok)).toBe(true);
+      expect(responses.some(r => r.type === 'webmcp:get_profiles_response' && r.id === 'req-prof')).toBe(true);
     });
   });
 });

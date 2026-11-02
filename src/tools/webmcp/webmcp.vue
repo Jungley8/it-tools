@@ -247,7 +247,7 @@ function jumpToPlayground(toolName: string) {
             </div>
             <div mt-1 text-sm font-medium>
               <n-tag :type="isNative ? 'success' : 'info'" size="small" round>
-                {{ isNative ? 'Native ModelContext' : 'WebMCP Shim Active' }}
+                {{ isNative ? t('tools.webmcp.status.nativeActive') : t('tools.webmcp.status.shimActive') }}
               </n-tag>
             </div>
           </div>
@@ -263,7 +263,7 @@ function jumpToPlayground(toolName: string) {
             </div>
             <div mt-1 text-sm font-medium>
               <n-tag type="success" size="small" round>
-                window.__webmcp__ Active
+                {{ t('tools.webmcp.status.bridgeActive') }}
               </n-tag>
             </div>
           </div>

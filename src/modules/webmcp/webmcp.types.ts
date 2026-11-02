@@ -95,6 +95,10 @@ export interface WebMCPGlobalApi {
   version: string
   isNativeSupported: boolean
   listTools: () => Array<Omit<WebMCPTool, 'execute'>>
+  searchTools: (
+    query: string,
+    options?: { category?: string; directlyExecutableOnly?: boolean },
+  ) => WebMCPToolSummary[]
   getAllToolsSummary: () => WebMCPToolSummary[]
   getTool: (name: string) => WebMCPTool | undefined
   callTool: (name: string, args?: Record<string, any>) => Promise<WebMCPCallResult>
