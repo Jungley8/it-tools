@@ -4,6 +4,8 @@ import type { WebMCPBridgeRequest, WebMCPGlobalApi, WebMCPTool } from './webmcp.
 
 let bridgeInstalled = false;
 
+const nativeAbortControllers = new Map<string, AbortController>();
+
 export function isNativeModelContextSupported(): boolean {
   if (typeof window === 'undefined') {
     return false;
@@ -15,29 +17,62 @@ export function isNativeModelContextSupported(): boolean {
   return isNavNative || isDocNative;
 }
 
-export function syncWithNativeModelContext(tools: Array<Omit<WebMCPTool, 'execute'>>) {
-  if (typeof document === 'undefined') {
+export function syncWithNativeModelContext(_tools?: Array<Omit<WebMCPTool, 'execute'>>) {
+  if (typeof window === 'undefined') {
     return;
   }
-  const mc = (document as any).modelContext ?? (typeof navigator !== 'undefined' ? (navigator as any).modelContext : null);
-  if (!mc || mc.isShim || mc[Symbol.for('webmcp.shim')]) {
+  const docMc = typeof document !== 'undefined' ? (document as any).modelContext : null;
+  const navMc = typeof navigator !== 'undefined' ? (navigator as any).modelContext : null;
+  const mcTargets = [docMc, navMc].filter(mc => mc && !mc[Symbol.for('webmcp.shim')] && typeof mc.registerTool === 'function');
+
+  if (mcTargets.length === 0) {
     return;
   }
-  if (typeof mc.registerTool === 'function') {
-    for (const tool of tools) {
-      const fullTool = webmcpRegistry.getTool(tool.name);
-      if (fullTool) {
-        try {
-          mc.registerTool({
+
+  // Register all core tools + active tools into native modelContext
+  const allExecTools = webmcpRegistry.getAllExecutableTools();
+  const activeTools = webmcpRegistry.getActiveTools();
+  const toolsToRegister = [...allExecTools, ...activeTools];
+
+  const seen = new Set<string>();
+  for (const tool of toolsToRegister) {
+    if (seen.has(tool.name)) {
+      continue;
+    }
+    seen.add(tool.name);
+
+    if (nativeAbortControllers.has(tool.name)) {
+      continue;
+    }
+
+    const fullTool = webmcpRegistry.getTool(tool.name);
+    if (!fullTool) {
+      continue;
+    }
+
+    const controller = new AbortController();
+    nativeAbortControllers.set(tool.name, controller);
+
+    for (const mc of mcTargets) {
+      try {
+        const regPromise = mc.registerTool(
+          {
             name: fullTool.name,
             description: fullTool.description,
             inputSchema: fullTool.inputSchema,
-            execute: fullTool.execute,
-          });
+            execute: async (args: any) => {
+              const res = await fullTool.execute(args ?? {});
+              return res.result !== undefined ? res.result : res;
+            },
+          },
+          { signal: controller.signal },
+        );
+        if (regPromise && typeof regPromise.catch === 'function') {
+          regPromise.catch(() => {});
         }
-        catch {
-          // ignore registration errors from native engine
-        }
+      }
+      catch {
+        // ignore registration errors from native engine
       }
     }
   }
@@ -72,17 +107,52 @@ export function installWebMCPBridge(): WebMCPGlobalApi | null {
   window.__webmcp__ = api;
 
   // Polyfill navigator.modelContext & document.modelContext if not present
+  const toolsStore = new Map<string, any>();
+
+  const getShimTools = () => {
+    const list = [...webmcpRegistry.getAllExecutableTools(), ...webmcpRegistry.getActiveTools()];
+    const unique = new Map<string, any>();
+    for (const t of list) {
+      if (!unique.has(t.name)) {
+        unique.set(t.name, {
+          name: t.name,
+          description: t.description,
+          inputSchema: t.inputSchema,
+          execute: async (args: any) => {
+            const res = await webmcpRegistry.callTool(t.name, args ?? {});
+            return res.result !== undefined ? res.result : res;
+          },
+        });
+      }
+    }
+    for (const [k, v] of toolsStore) {
+      unique.set(k, v);
+    }
+    return Array.from(unique.values());
+  };
+
   const modelContextShim = {
     isShim: true,
     [Symbol.for('webmcp.shim')]: true,
-    registerTool: async (tool: any) => {
+    get tools() {
+      return getShimTools();
+    },
+    registerTool: async (tool: any, options?: { signal?: AbortSignal }) => {
+      toolsStore.set(tool.name, tool);
       webmcpRegistry.registerTool(tool);
+      if (options?.signal) {
+        options.signal.addEventListener('abort', () => {
+          toolsStore.delete(tool.name);
+          webmcpRegistry.unregisterTool(tool.name);
+        });
+      }
     },
     unregisterTool: async (name: string) => {
+      toolsStore.delete(name);
       return webmcpRegistry.unregisterTool(name);
     },
-    getTools: async () => webmcpRegistry.getActiveTools(),
-    listTools: async () => webmcpRegistry.getActiveTools(),
+    getTools: async () => getShimTools(),
+    listTools: async () => getShimTools(),
     callTool: async (name: string, args?: any) => webmcpRegistry.callTool(name, args),
     executeTool: async (name: string, args?: any) => webmcpRegistry.callTool(name, args),
     getTool: (name: string) => webmcpRegistry.getTool(name),

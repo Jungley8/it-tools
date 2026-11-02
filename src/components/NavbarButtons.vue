@@ -24,7 +24,7 @@ const { isDarkTheme } = toRefs(styleStore);
     <c-button
       circle
       variant="text"
-      href="https://x.com/ittoolsdottech"
+      href="https://x.com/JungleyYeh"
       rel="noopener"
       target="_blank"
       :aria-label="$t('home.nav.twitterXAccount')"

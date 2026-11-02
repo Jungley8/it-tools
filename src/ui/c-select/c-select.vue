@@ -47,7 +47,7 @@ const selectedOption = shallowRef<CSelectOption<T> | undefined>(options.value.fi
 const focusIndex = ref(0);
 const elementRef = ref(null);
 
-const size = computed(() => theme.value.sizes[sizeName.value as 'small' | 'medium' | 'large']);
+const size = computed(() => theme.value.sizes[sizeName.value as 'small' | 'medium' | 'large'] ?? theme.value.sizes.medium);
 
 const searchQuery = ref('');
 const searchInputRef = ref();

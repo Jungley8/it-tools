@@ -30,6 +30,10 @@ function createTheme({ style }: { style: 'light' | 'dark' }) {
 
   return {
     size: {
+      tiny: {
+        width: '24px',
+        fontSize: '12px',
+      },
       small: {
         width: '28px',
         fontSize: '12px',

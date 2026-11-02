@@ -12,7 +12,7 @@ const props = withDefaults(
     circle?: boolean
     href?: string
     to?: RouteLocationRaw
-    size?: 'small' | 'medium' | 'large'
+    size?: 'tiny' | 'small' | 'medium' | 'large'
   }>(),
   {
     type: 'default',
@@ -36,7 +36,11 @@ function handleClick(event: MouseEvent) {
 }
 
 const theme = useTheme();
-const variantTheme = computed(() => theme.value[variant.value][type.value]);
+const variantTheme = computed(() => {
+  const v = variant.value === 'text' ? 'text' : 'basic';
+  const t = (type.value in theme.value[v] ? type.value : 'default') as 'default' | 'primary' | 'warning' | 'error';
+  return theme.value[v][t];
+});
 const tag = computed(() => {
   if (href.value) {
     return 'a';
@@ -48,7 +52,10 @@ const tag = computed(() => {
 });
 const appTheme = useAppTheme();
 
-const size = computed(() => theme.value.size[sizeName.value]);
+const size = computed(() => {
+  const s = (sizeName.value && sizeName.value in theme.value.size ? sizeName.value : 'medium') as keyof typeof theme.value.size;
+  return theme.value.size[s];
+});
 </script>
 
 <template>

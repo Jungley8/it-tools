@@ -36,7 +36,7 @@ function onUpdateFavoriteTools() {
           >GitHub</a>
           {{ $t('home.follow.p2') }}
           <a
-            href="https://x.com/ittoolsdottech"
+            href="https://x.com/JungleyYeh"
             rel="noopener"
             target="_blank"
             :aria-label="$t('home.follow.twitterXAccount')"
