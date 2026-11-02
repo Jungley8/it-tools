@@ -35,4 +35,58 @@ describe('web-to-llm-markdown service', () => {
     expect(result.markdown).toContain('[Image: Tiny Pixel]');
     expect(result.markdown).not.toContain('data:image/png');
   });
+
+  it('should convert HTML tables to GFM markdown format', () => {
+    const html = `
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alice</td>
+            <td>Admin</td>
+          </tr>
+          <tr>
+            <td>Bob</td>
+            <td>Developer</td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+    const result = convertHtmlToLlmMarkdown(html);
+
+    expect(result.markdown).toContain('| Name | Role |');
+    expect(result.markdown).toContain('| --- | --- |');
+    expect(result.markdown).toContain('| Alice | Admin |');
+    expect(result.markdown).toContain('| Bob | Developer |');
+  });
+
+  it('should handle nested HTML tables without breaking document structure', () => {
+    const html = `
+      <table>
+        <tr>
+          <th>Category</th>
+          <th>Details</th>
+        </tr>
+        <tr>
+          <td>Outer Row</td>
+          <td>
+            <table>
+              <tr><th>InnerKey</th></tr>
+              <tr><td>InnerVal</td></tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    `;
+    const result = convertHtmlToLlmMarkdown(html);
+
+    expect(result.markdown).toContain('| Category | Details |');
+    expect(result.markdown).toContain('Outer Row');
+    expect(result.markdown).toContain('InnerVal');
+  });
 });

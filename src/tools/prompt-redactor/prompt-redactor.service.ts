@@ -73,7 +73,7 @@ export function redactText(text: string, options: Partial<RedactorOptions> = {})
 
   // 2. Email Addresses
   if (opts.emails) {
-    const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b/g;
+    const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,7}\b/g;
     currentText = currentText.replace(emailPattern, (match) => {
       emailCount++;
       const placeholder = `{{REDACTED_EMAIL_${emailCount}}}`;
@@ -127,13 +127,25 @@ export function redactText(text: string, options: Partial<RedactorOptions> = {})
 
   // 6. Custom Keywords
   if (opts.customKeywords && opts.customKeywords.length > 0) {
-    for (const kw of opts.customKeywords) {
-      const trimmed = kw.trim();
-      if (!trimmed) {
-        continue;
+    const cjkPattern = /[\u1100-\u11FF\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uAC00-\uD7AF\uF900-\uFAFF]/;
+    // Deduplicate and sort descending by length so longer phrases are matched before substrings
+    const sortedKeywords = Array.from(new Set(opts.customKeywords.map(k => k.trim()).filter(Boolean)))
+      .sort((a, b) => b.length - a.length);
+
+    for (const kw of sortedKeywords) {
+      const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const hasCjk = cjkPattern.test(kw);
+      let regex: RegExp;
+      if (hasCjk) {
+        regex = new RegExp(escaped, 'gi');
       }
-      const escaped = trimmed.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(`\\b${escaped}\\b`, 'gi');
+      else {
+        // Only apply \b where character is an ASCII word character to avoid breaking keywords like C++ or .env
+        const leftBoundary = /^\w/.test(kw) ? '\\b' : '';
+        const rightBoundary = /\w$/.test(kw) ? '\\b' : '';
+        regex = new RegExp(`${leftBoundary}${escaped}${rightBoundary}`, 'gi');
+      }
+
       currentText = currentText.replace(regex, (match) => {
         customCount++;
         const placeholder = `{{REDACTED_KEYWORD_${customCount}}}`;

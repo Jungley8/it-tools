@@ -34,15 +34,17 @@ export function isIgnoredFile(filePath: string): boolean {
   return IGNORE_PATTERNS.some(pattern => pattern.test(filePath));
 }
 
+const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype', '.', '..']);
+
 export function buildFileTreeAscii(paths: string[]): string {
-  const tree: Record<string, unknown> = {};
+  const tree: Record<string, unknown> = Object.create(null);
 
   for (const path of paths) {
-    const parts = path.split('/').filter(Boolean);
+    const parts = path.replace(/\\/g, '/').split('/').filter(p => Boolean(p) && !DANGEROUS_KEYS.has(p));
     let current = tree;
     for (const part of parts) {
       if (!current[part]) {
-        current[part] = {};
+        current[part] = Object.create(null);
       }
       current = current[part] as Record<string, unknown>;
     }

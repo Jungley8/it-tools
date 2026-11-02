@@ -48,4 +48,31 @@ describe('codebase-context-packer service', () => {
     expect(result.packedContent).toContain('## File: src/app.py');
     expect(result.packedContent).toContain('```py\nprint("hello")\n```');
   });
+
+  it('should not pollute Object.prototype when paths contain __proto__ or dangerous keys', () => {
+    const paths = [
+      '__proto__/polluted',
+      'src/__proto__/polluted',
+      'constructor/prototype/dangerous.ts',
+      'src/utils/safe.ts',
+    ];
+    const tree = buildFileTreeAscii(paths);
+
+    expect((Object.prototype as any).polluted).toBeUndefined();
+    expect((Object.prototype as any).dangerous).toBeUndefined();
+    expect(tree).toContain('safe.ts');
+    expect(tree).not.toContain('__proto__');
+  });
+
+  it('should normalize Windows path separators and ignore dot segments', () => {
+    const paths = [
+      'src\\components\\Button.tsx',
+      'src/./utils/../helper.ts',
+    ];
+    const tree = buildFileTreeAscii(paths);
+
+    expect(tree).toContain('Button.tsx');
+    expect(tree).toContain('helper.ts');
+    expect(tree).not.toContain('..');
+  });
 });

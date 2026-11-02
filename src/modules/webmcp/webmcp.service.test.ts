@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { WebMCPRegistry } from './webmcp.service';
+import { WebMCPRegistry, webmcpRegistry } from './webmcp.service';
 import { installWebMCPBridge, isNativeModelContextSupported } from './webmcp-bridge';
 import { searchCatalogTools } from './webmcp-catalog';
 
@@ -360,6 +360,36 @@ describe('WebMCPRegistry & Two-Stage Discovery', () => {
       expect(responses.some(r => r.type === 'webmcp:search_tools_response' && r.id === 'req-search')).toBe(true);
       expect(responses.some(r => r.type === 'webmcp:call_tool_response' && r.id === 'req-call' && r.ok)).toBe(true);
       expect(responses.some(r => r.type === 'webmcp:get_profiles_response' && r.id === 'req-prof')).toBe(true);
+    });
+
+    it('dispatches tools_changed to window.location.origin when origin is valid', () => {
+      installWebMCPBridge();
+      let capturedOrigin: string | undefined;
+      const originalPostMessage = window.postMessage;
+      window.postMessage = ((message: any, targetOrigin: string) => {
+        if (message?.type === 'webmcp:tools_changed') {
+          capturedOrigin = targetOrigin;
+        }
+        return (originalPostMessage as any).call(window, message, targetOrigin);
+      }) as any;
+
+      try {
+        webmcpRegistry.registerTool({
+          name: 'test_origin_tool',
+          title: 'Test Origin Tool',
+          description: 'Testing target origin',
+          scope: 'global',
+          inputSchema: { type: 'object', properties: {} },
+          execute: async () => ({ success: true }),
+        });
+
+        expect(capturedOrigin).toBe(window.location.origin);
+        expect(capturedOrigin).not.toBe('*');
+      }
+      finally {
+        window.postMessage = originalPostMessage;
+        webmcpRegistry.unregisterTool('test_origin_tool');
+      }
     });
   });
 });

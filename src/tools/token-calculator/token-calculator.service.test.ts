@@ -33,4 +33,30 @@ describe('token-calculator service', () => {
     expect(gpt4o).toBeDefined();
     expect(gpt4o?.inputCostUSD).toBeGreaterThanOrEqual(0);
   });
+
+  it('should estimate Japanese and Korean text tokens correctly', () => {
+    // Japanese text (Hiragana, Katakana, and Kanji)
+    const japaneseText = 'こんにちは世界！AIモデルのトークン計算テストです。';
+    const jaResult = analyzeTextTokens(japaneseText);
+    expect(jaResult.stats.cjkCharacters).toBeGreaterThan(15);
+    expect(jaResult.stats.baseTokens).toBeGreaterThan(15);
+
+    // Korean text (Hangul)
+    const koreanText = '안녕하세요 세계! 인공지능 토큰 계산 테스트입니다.';
+    const koResult = analyzeTextTokens(koreanText);
+    expect(koResult.stats.cjkCharacters).toBeGreaterThan(15);
+    expect(koResult.stats.baseTokens).toBeGreaterThan(15);
+  });
+
+  it('should be strictly idempotent and stateless across repeated calls', () => {
+    const singleChar = 'あ';
+    const firstTokens = estimateBaseTokens(singleChar);
+    const secondTokens = estimateBaseTokens(singleChar);
+    expect(firstTokens).toBe(secondTokens);
+
+    const firstStats = analyzeTextTokens(singleChar);
+    const secondStats = analyzeTextTokens(singleChar);
+    expect(firstStats.stats.cjkCharacters).toBe(secondStats.stats.cjkCharacters);
+    expect(firstStats.stats.cjkCharacters).toBe(1);
+  });
 });

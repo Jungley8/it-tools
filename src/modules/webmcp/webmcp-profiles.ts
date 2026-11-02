@@ -16,19 +16,32 @@ export const predefinedProfiles: WebMCPProfile[] = [
       claudeDesktop: {
         mcpServers: {
           'it-tools-ai': {
-            command: 'npx',
-            args: ['-y', '@it-tools/mcp-server', '--profile', 'ai-engineering'],
+            transport: 'browser-bridge',
+            profile: 'ai-engineering',
+            bridgeProtocol: 'webmcp',
+            tools: [
+              'token_calculator',
+              'prompt_redactor',
+              'web_to_llm_markdown',
+              'mcp_tool_generator',
+              'codebase_context_packer',
+            ],
           },
         },
       },
       cursor: {
         mcpServers: {
           'it-tools-ai': {
-            url: 'https://it-tools.tech/mcp/sse',
-            transport: 'sse',
-            headers: {
-              'x-mcp-profile': 'ai-engineering',
-            },
+            transport: 'browser-bridge',
+            profile: 'ai-engineering',
+            bridgeProtocol: 'webmcp',
+            tools: [
+              'token_calculator',
+              'prompt_redactor',
+              'web_to_llm_markdown',
+              'mcp_tool_generator',
+              'codebase_context_packer',
+            ],
           },
         },
       },
@@ -73,19 +86,20 @@ export const predefinedProfiles: WebMCPProfile[] = [
       claudeDesktop: {
         mcpServers: {
           'it-tools-crypto': {
-            command: 'npx',
-            args: ['-y', '@it-tools/mcp-server', '--profile', 'crypto-security'],
+            transport: 'browser-bridge',
+            profile: 'crypto-security',
+            bridgeProtocol: 'webmcp',
+            tools: ['hash_text', 'base64_string_converter', 'uuid_generator'],
           },
         },
       },
       cursor: {
         mcpServers: {
           'it-tools-crypto': {
-            url: 'https://it-tools.tech/mcp/sse',
-            transport: 'sse',
-            headers: {
-              'x-mcp-profile': 'crypto-security',
-            },
+            transport: 'browser-bridge',
+            profile: 'crypto-security',
+            bridgeProtocol: 'webmcp',
+            tools: ['hash_text', 'base64_string_converter', 'uuid_generator'],
           },
         },
       },
@@ -121,19 +135,32 @@ export const predefinedProfiles: WebMCPProfile[] = [
       claudeDesktop: {
         mcpServers: {
           'it-tools-web': {
-            command: 'npx',
-            args: ['-y', '@it-tools/mcp-server', '--profile', 'web-developer'],
+            transport: 'browser-bridge',
+            profile: 'web-developer',
+            bridgeProtocol: 'webmcp',
+            tools: [
+              'url_encoder',
+              'case_converter',
+              'json_minify',
+              'random_port_generator',
+              'base64_string_converter',
+            ],
           },
         },
       },
       cursor: {
         mcpServers: {
           'it-tools-web': {
-            url: 'https://it-tools.tech/mcp/sse',
-            transport: 'sse',
-            headers: {
-              'x-mcp-profile': 'web-developer',
-            },
+            transport: 'browser-bridge',
+            profile: 'web-developer',
+            bridgeProtocol: 'webmcp',
+            tools: [
+              'url_encoder',
+              'case_converter',
+              'json_minify',
+              'random_port_generator',
+              'base64_string_converter',
+            ],
           },
         },
       },
@@ -184,19 +211,50 @@ export const predefinedProfiles: WebMCPProfile[] = [
       claudeDesktop: {
         mcpServers: {
           'it-tools-all': {
-            command: 'npx',
-            args: ['-y', '@it-tools/mcp-server', '--profile', 'all-tools'],
+            transport: 'browser-bridge',
+            profile: 'all-tools',
+            bridgeProtocol: 'webmcp',
+            tools: [
+              'search_tools',
+              'execute_tool',
+              'token_calculator',
+              'prompt_redactor',
+              'web_to_llm_markdown',
+              'mcp_tool_generator',
+              'codebase_context_packer',
+              'hash_text',
+              'base64_string_converter',
+              'uuid_generator',
+              'case_converter',
+              'url_encoder',
+              'json_minify',
+              'random_port_generator',
+            ],
           },
         },
       },
       cursor: {
         mcpServers: {
           'it-tools-all': {
-            url: 'https://it-tools.tech/mcp/sse',
-            transport: 'sse',
-            headers: {
-              'x-mcp-profile': 'all-tools',
-            },
+            transport: 'browser-bridge',
+            profile: 'all-tools',
+            bridgeProtocol: 'webmcp',
+            tools: [
+              'search_tools',
+              'execute_tool',
+              'token_calculator',
+              'prompt_redactor',
+              'web_to_llm_markdown',
+              'mcp_tool_generator',
+              'codebase_context_packer',
+              'hash_text',
+              'base64_string_converter',
+              'uuid_generator',
+              'case_converter',
+              'url_encoder',
+              'json_minify',
+              'random_port_generator',
+            ],
           },
         },
       },

@@ -122,6 +122,23 @@ export interface ModelEstimate {
 }
 
 /**
+ * Regular expression matching CJK characters, Japanese Hiragana & Katakana, and Korean Hangul.
+ * Ranges:
+ * - Hangul Jamo: \u1100-\u11FF
+ * - Hiragana: \u3040-\u309F
+ * - Katakana: \u30A0-\u30FF
+ * - CJK Unified Ideographs Extension A: \u3400-\u4DBF
+ * - CJK Unified Ideographs: \u4E00-\u9FFF
+ * - Hangul Syllables: \uAC00-\uD7AF
+ * - CJK Compatibility Ideographs: \uF900-\uFAFF
+ */
+export const CJK_CHAR_REGEX = /[\u1100-\u11FF\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uAC00-\uD7AF\uF900-\uFAFF]/g;
+
+function createCjkRegex(): RegExp {
+  return new RegExp(CJK_CHAR_REGEX.source, 'g');
+}
+
+/**
  * Accurately estimate token count for text across different languages.
  * CJK (Chinese, Japanese, Korean) characters typically consume 1.2 to 1.8 tokens per character in modern BPE.
  * Latin words average ~1.3 tokens per word (or ~4 chars per token).
@@ -132,12 +149,13 @@ export function estimateBaseTokens(text: string): number {
     return 0;
   }
 
-  // Count CJK characters (Unicode ranges: 4E00-9FFF, 3400-4DBF, F900-FAFF)
-  const cjkMatches = text.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g);
+  // Count CJK, Hiragana, Katakana, and Hangul characters
+  const cjkRegex = createCjkRegex();
+  const cjkMatches = text.match(cjkRegex);
   const cjkCount = cjkMatches ? cjkMatches.length : 0;
 
   // Non-CJK text
-  const nonCjkText = text.replace(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g, ' ');
+  const nonCjkText = text.replace(createCjkRegex(), ' ');
 
   // Split into words and punctuation
   const words = nonCjkText.trim().split(/\s+/).filter(Boolean);
@@ -161,7 +179,7 @@ export function analyzeTextTokens(text: string): {
   const charactersWithoutSpaces = text.replace(/\s/g, '').length;
   const lines = text ? text.split('\n').length : 0;
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-  const cjkMatches = text.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g);
+  const cjkMatches = text.match(createCjkRegex());
   const cjkCharacters = cjkMatches ? cjkMatches.length : 0;
 
   const baseTokens = estimateBaseTokens(text);

@@ -118,7 +118,9 @@ export function installWebMCPBridge(): WebMCPGlobalApi | null {
     }
 
     const target = (event.source as Window | null) ?? (typeof window !== 'undefined' ? window : null);
-    const origin = (event.origin && event.origin !== 'null') ? event.origin : '*';
+    const origin = (event.origin && event.origin !== 'null')
+      ? event.origin
+      : ((typeof window !== 'undefined' && window.location?.origin && window.location.origin !== 'null') ? window.location.origin : '*');
 
     switch (data.type) {
       case 'webmcp:ping': {
@@ -184,7 +186,10 @@ export function installWebMCPBridge(): WebMCPGlobalApi | null {
   webmcpRegistry.onToolsChanged((tools) => {
     try {
       window.dispatchEvent(new CustomEvent('webmcp:tools_changed', { detail: { tools } }));
-      window.postMessage({ type: 'webmcp:tools_changed', tools }, '*');
+      const targetOrigin = (typeof window !== 'undefined' && window.location?.origin && window.location.origin !== 'null')
+        ? window.location.origin
+        : '*';
+      window.postMessage({ type: 'webmcp:tools_changed', tools }, targetOrigin);
     }
     catch {
       // ignore dispatch issues

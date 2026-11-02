@@ -41,4 +41,31 @@ describe('prompt-redactor service', () => {
     const restored = restoreText(result.redactedText, result.mappings);
     expect(restored).toBe(text);
   });
+
+  it('should redact Chinese custom keywords properly and restore them', () => {
+    const text = '这是我们的机密量子项目，请务必对量子项目保密。';
+    const result = redactText(text, { customKeywords: ['量子项目'] });
+
+    expect(result.redactedText).not.toContain('量子项目');
+    expect(result.redactedText).toContain('{{REDACTED_KEYWORD_1}}');
+    expect(result.redactedText).toContain('{{REDACTED_KEYWORD_2}}');
+    expect(result.stats.customKeywords).toBe(2);
+
+    const restored = restoreText(result.redactedText, result.mappings);
+    expect(restored).toBe(text);
+  });
+
+  it('should prioritize longer overlapping custom keywords and handle punctuation keywords', () => {
+    const text = 'Check the .env file for C++ and 量子计算 secrets.';
+    // Pass shorter keyword first to test that sorting prioritizes longer keyword
+    const result = redactText(text, { customKeywords: ['量子', '量子计算', 'C++', '.env'] });
+
+    expect(result.redactedText).not.toContain('量子计算');
+    expect(result.redactedText).not.toContain('C++');
+    expect(result.redactedText).not.toContain('.env');
+    expect(result.stats.customKeywords).toBe(3);
+
+    const restored = restoreText(result.redactedText, result.mappings);
+    expect(restored).toBe(text);
+  });
 });

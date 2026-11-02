@@ -18,6 +18,68 @@ export interface CleanedMarkdownResult {
   estimatedSavedTokens: number
 }
 
+export function convertTablesToMarkdown(html: string): string {
+  let processed = html;
+  let iterations = 0;
+  const maxIterations = 20;
+
+  // Iteratively process innermost tables first so nested tables are converted cleanly without breaking outer bounds
+  while (/<table\b[^>]*>(?:(?!<table\b)[\s\S])*?<\/table>/i.test(processed) && iterations++ < maxIterations) {
+    processed = processed.replace(/<table\b[^>]*>((?:(?!<table\b)[\s\S])*?)<\/table>/gi, (_match, tableContent) => {
+      const rows: string[][] = [];
+      const rowMatches = Array.from(tableContent.matchAll(/<tr\b[^>]*>([\s\S]*?)<\/tr>/gi)) as RegExpMatchArray[];
+      for (const rowMatch of rowMatches) {
+        const rowInner = rowMatch[1];
+        const cells: string[] = [];
+        const cellMatches = Array.from(rowInner.matchAll(/<(?:th|td)\b[^>]*>([\s\S]*?)<\/(?:th|td)>/gi)) as RegExpMatchArray[];
+
+        for (const cellMatch of cellMatches) {
+          const cellText = cellMatch[1]
+            .replace(/<br\s*\/?>/gi, ' ')
+            .replace(/<\/p>/gi, ' ')
+            .replace(/<[^>]+>/g, '')
+            .replace(/[\r\n\t]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .replace(/\|/g, '\\|')
+            .trim();
+          cells.push(cellText);
+        }
+
+        if (cells.length > 0) {
+          rows.push(cells);
+        }
+      }
+
+      if (rows.length === 0) {
+        return '';
+      }
+
+      const maxCols = Math.max(...rows.map(r => r.length));
+      if (maxCols === 0) {
+        return '';
+      }
+
+      const lines: string[] = [];
+      rows.forEach((row, index) => {
+        const paddedRow = [...row];
+        while (paddedRow.length < maxCols) {
+          paddedRow.push('');
+        }
+        lines.push(`| ${paddedRow.join(' | ')} |`);
+
+        if (index === 0) {
+          const delimiter = Array(maxCols).fill('---').join(' | ');
+          lines.push(`| ${delimiter} |`);
+        }
+      });
+
+      return `\n\n${lines.join('\n')}\n\n`;
+    });
+  }
+
+  return processed;
+}
+
 /**
  * Converts raw HTML into high-density, clean Markdown for LLMs.
  * Removes bloated scripts, styles, SVGs, base64 images, and layout tags.
@@ -94,12 +156,15 @@ export function convertHtmlToLlmMarkdown(
     processed = processed.replace(/<img\b[^>]*src=["']([^"']*)["'][^>]*>/gi, '![]($1)');
   }
 
-  // 9. Paragraphs and Line Breaks
+  // 9. Tables
+  processed = convertTablesToMarkdown(processed);
+
+  // 10. Paragraphs and Line Breaks
   processed = processed.replace(/<br\s*\/?>/gi, '\n');
   processed = processed.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, '\n\n$1\n\n');
   processed = processed.replace(/<hr\s*\/?>/gi, '\n---\n');
 
-  // 10. Strip remaining HTML tags
+  // 11. Strip remaining HTML tags
   processed = processed.replace(/<[^>]+>/g, '');
 
   // 11. Decode common HTML entities
