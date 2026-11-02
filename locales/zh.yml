@@ -371,18 +371,128 @@ tools:
   token-calculator:
     title: Token 估算与模型成本计算器
     description: 实时估算提示词 Token 消耗、上下文窗口占比，并测算 GPT-4o、Claude 3.5、DeepSeek、Llama 等主流模型的 API 成本。
+    input-title: 提示词与输入文本
+    samples: '预设示例：'
+    preset-english: 英文架构提示词
+    preset-chinese: 中文技术提示词
+    preset-code: TypeScript 代码片段
+    clear: 清空
+    placeholder: 在此粘贴或输入提示词、源代码、Markdown 或文章...
+    base-tokens: 预估 Token 消耗
+    characters: 字符总数
+    words: 词数统计
+    lines: 行数
+    ratio: 词 Token 比
+    char-ratio: 字 Token 比
+    cjk-chars: 中日韩字符
+    copy-stats: 复制统计
+    copied: Token 统计数据已复制到剪贴板
+    models-title: 主流模型成本与上下文窗口对比
+    model: 模型
+    provider: 厂商
+    tokens: 预估消耗
+    context-usage: 上下文占比
+    input-cost: 输入成本 ($)
+    cached-cost: 缓存读取成本 ($)
+    footnote: '* 价格基于各厂商每 100 万 Token 的公开 API 定价测算。Token 换算系数综合考量了不同模型 BPE 分词器的编码差异。'
   prompt-redactor:
     title: AI 提问隐私脱敏与还原器
     description: 向大模型提问前自动脱敏 API Key、邮箱、内网 IP、手机号等敏感凭证，并支持从 AI 回答中一键精准还原。
+    tab-redact: 1. 隐私敏感信息脱敏
+    tab-restore: 2. 从 AI 回答中还原
+    options-title: 敏感特征检测规则
+    opt-apikeys: API Key 与密钥凭据
+    opt-emails: 电子邮箱地址
+    opt-ips: IPv4 地址
+    opt-phones: 手机与电话号码
+    opt-idcards: 身份证号
+    custom-keywords-label: '自定义脱敏关键词（逗号或换行分隔）：'
+    custom-keywords-placeholder: '例如：MySecretProject, internal.corp.net'
+    raw-title: 原始提示词 / 代码 / 日志
+    sample-btn: 载入示例
+    raw-placeholder: 在此粘贴包含敏感凭证的代码、日志或提问内容...
+    characters: 字符
+    clear: 清空
+    redacted-title: 安全脱敏提问词 (可直接发送给 AI)
+    secrets-masked: 处敏感凭证已脱敏
+    redacted-placeholder: 脱敏后的内容将显示在此处，可直接复制发送给 ChatGPT、Claude 或 DeepSeek...
+    keys-count: 密钥
+    emails-count: 邮箱
+    ips-count: IP
+    phones-count: 手机
+    copy-redacted: 保存映射并复制脱敏提问词
+    copied-redacted: 脱敏提示词已复制到剪贴板
+    ai-response-title: 粘贴 AI 生成的回答内容 (保留占位标签)
+    ai-response-placeholder: 在此粘贴 AI 返回的回答内容（包含 REDACTED 占位符）...
+    active-mappings: '当前已保存映射：{count} 个占位符'
+    clear-mappings: 清空映射表
+    restored-title: 已还原内容 (恢复原始私密凭证)
+    restored-placeholder: 一键还原真实密钥后的代码或文本将在此显示...
+    copy-restored: 复制还原后的内容
+    copied-restored: 已还原内容已复制到剪贴板
   web-to-llm-markdown:
     title: 网页 HTML 转纯净 LLM Markdown
     description: 剔除网页源码中的样式脚本、SVG 与布局噪点，清洗为高信息密度且适配大模型上下文的干净 Markdown。
+    options-title: 清洗与转换选项
+    opt-strip-images: 去除图片超链接（仅保留占位符/文本）
+    opt-strip-links: 去除普通外链地址（仅保留链接文本）
+    opt-compact: 压缩多余空行与空白字符
+    input-title: 网页源码 / HTML 片段
+    load-sample: 载入网页示例
+    placeholder: 在此粘贴网页 HTML 源码、文章富文本或采集内容...
+    characters: 字符
+    clear: 清空
+    output-title: 清洗后高密度 GFM Markdown
+    saved-context: '节省了 {percent}% 上下文空间 (约 {tokens} Token)'
+    output-placeholder: 清洗转换后的标准 Markdown 将在此呈现...
+    copy: 复制 Markdown
+    copied: 清洗后的 Markdown 已复制到剪贴板
   mcp-tool-generator:
     title: MCP 契约与 Tool Calling 生成器
     description: 可视化构建或根据示例 JSON 自动推断，一键生成 Anthropic MCP 工具契约、OpenAI 函数调用及 TypeScript Zod 校验定义。
+    basic-info: 工具基本元数据
+    tool-name: 工具名称 (snake_case 规范)
+    tool-name-placeholder: '例如：search_database, send_slack_alert'
+    tool-desc: 功能描述 (供 AI Agent 规划调用决策)
+    tool-desc-placeholder: 清晰说明该工具的具体功能、触发场景与返回结果...
+    parameters-card: 输入参数契约定义
+    infer-card: 从示例 JSON 自动反推参数
+    sample-json-placeholder: 在此粘贴示例 JSON 对象以自动反推参数契约...
+    infer-btn: 开始推断参数
+    add-param-btn: 新增参数字段
+    param-name: 字段名
+    param-type: 数据类型
+    param-desc: 说明与取值范围
+    param-required: 必填
+    remove-param: 删除
+    output-title: 生成的 Agent 接口契约规范
+    format-mcp: Anthropic MCP 工具契约
+    format-openai: OpenAI 函数调用定义
+    format-zod: TypeScript + Zod 校验模式
+    copy-code: 复制接口定义代码
+    copied: 接口契约代码已复制到剪贴板
   codebase-context-packer:
     title: 代码库上下文打包器 (Browser Repomix)
     description: 将多个源代码文件与目录树打包为大模型偏好的 XML 或 Markdown 上下文格式，并即时估算总 Token 消耗。
+    options-title: 打包格式与提示词选项
+    format-xml: XML 标签格式 (<file path="...">)
+    format-markdown: 'Markdown 围栏格式 (```file)'
+    include-tree: 在上下文首部生成 ASCII 目录树
+    instruction-label: 前置系统引导提示词 (注入于代码上下文头部)：
+    instruction-placeholder: 输入前置给 AI 的系统引导提示词...
+    batch-card: 代码库文件管理 (共 {count} 个文件，预估 ~{tokens} Token)
+    upload-btn: 选择文件或拖拽上传
+    clear-all: 清空全部文件
+    no-files: 暂无添加的代码文件。请上传文件或在下方手动添加。
+    add-file-title: 手动添加单个文件
+    file-path-placeholder: '文件相对路径，例如：src/utils/math.ts'
+    file-content-placeholder: 文件源代码内容...
+    add-file-btn: 添加文件到上下文
+    remove-file: 移除
+    output-title: 生成的整包上下文文件 (供 AI 读取)
+    download-txt: 下载文本文件 (.txt)
+    copy-context: 复制上下文
+    copied: 打包的代码上下文已复制到剪贴板
   webmcp:
     title: WebMCP 浏览器控制中心
     description: 管理浏览器 WebMCP 工具契约，检查参数规范，执行在线调试演练，并导出场景画像配置。

@@ -93,7 +93,7 @@ const packedResult = computed(() => {
 
 const { copy } = useCopy({
   source: () => packedResult.value.packedContent,
-  text: 'Packed codebase context copied to clipboard',
+  text: t('tools.codebase-context-packer.copied'),
   createToast: true,
 });
 
@@ -111,26 +111,26 @@ function downloadContext() {
 <template>
   <div>
     <!-- Options & Batch Actions -->
-    <c-card :title="t('tools.codebase-context-packer.options-title', 'Packer Options')">
+    <c-card :title="t('tools.codebase-context-packer.options-title')">
       <div flex flex-wrap items-center justify-between gap-4>
         <div flex flex-wrap items-center gap-4>
           <n-radio-group v-model:value="options.format" size="small">
             <n-radio-button value="xml">
-              XML Format (&lt;file path="..."&gt;)
+              {{ t('tools.codebase-context-packer.format-xml') }}
             </n-radio-button>
             <n-radio-button value="markdown">
-              Markdown Code Blocks
+              {{ t('tools.codebase-context-packer.format-markdown') }}
             </n-radio-button>
           </n-radio-group>
 
           <n-checkbox v-model:checked="options.includeFileTree">
-            {{ t('tools.codebase-context-packer.opt-tree', 'Include ASCII Directory Tree') }}
+            {{ t('tools.codebase-context-packer.include-tree') }}
           </n-checkbox>
         </div>
 
         <div flex items-center gap-2>
           <label class="n-button n-button--default-type n-button--small-type cursor-pointer">
-            📁 {{ t('tools.codebase-context-packer.upload-files', 'Upload Files / Folder') }}
+            📁 {{ t('tools.codebase-context-packer.upload-btn') }}
             <input
               type="file"
               multiple
@@ -140,9 +140,20 @@ function downloadContext() {
           </label>
 
           <c-button size="small" :disabled="files.length === 0" @click="files = []">
-            {{ t('tools.codebase-context-packer.clear-all', 'Clear All') }}
+            {{ t('tools.codebase-context-packer.clear-all') }}
           </c-button>
         </div>
+      </div>
+
+      <div mt-3>
+        <div mb-1 text-xs op-75>
+          {{ t('tools.codebase-context-packer.instruction-label') }}
+        </div>
+        <c-input-text
+          v-model:value="options.instructionPrompt"
+          :placeholder="t('tools.codebase-context-packer.instruction-placeholder')"
+          size="small"
+        />
       </div>
     </c-card>
 
@@ -150,7 +161,7 @@ function downloadContext() {
       <!-- Files Management -->
       <div flex flex-col gap-4>
         <!-- Existing Files List -->
-        <c-card :title="`${t('tools.codebase-context-packer.files-list', 'Files in Context')} (${files.length})`">
+        <c-card :title="t('tools.codebase-context-packer.batch-card', { count: files.length, tokens: packedResult.estimatedTokens.toLocaleString() })">
           <div max-h-72 flex flex-col gap-2 overflow-y-auto>
             <div
               v-for="(f, idx) in files"
@@ -162,24 +173,24 @@ function downloadContext() {
               </div>
               <div flex items-center gap-2>
                 <span op-60>{{ f.content.length.toLocaleString() }} chars</span>
-                <c-button size="tiny" @click="removeFile(idx)">
+                <c-button size="tiny" :title="t('tools.codebase-context-packer.remove-file')" @click="removeFile(idx)">
                   ✕
                 </c-button>
               </div>
             </div>
 
             <div v-if="files.length === 0" py-6 text-center text-xs op-60>
-              {{ t('tools.codebase-context-packer.no-files', 'No files added yet. Upload files or add manually below.') }}
+              {{ t('tools.codebase-context-packer.no-files') }}
             </div>
           </div>
         </c-card>
 
         <!-- Manual Add File -->
-        <c-card :title="t('tools.codebase-context-packer.add-manual', 'Add Single File Manually')">
+        <c-card :title="t('tools.codebase-context-packer.add-file-title')">
           <div mb-2>
             <c-input-text
               v-model:value="newFilePath"
-              placeholder="File path, e.g. src/auth/jwt.ts"
+              :placeholder="t('tools.codebase-context-packer.file-path-placeholder')"
               size="small"
               monospace
             />
@@ -189,20 +200,20 @@ function downloadContext() {
               v-model:value="newFileContent"
               multiline
               rows="4"
-              placeholder="File content..."
+              :placeholder="t('tools.codebase-context-packer.file-content-placeholder')"
               monospace
             />
           </div>
           <div mt-2 flex justify-end>
             <c-button size="small" :disabled="!newFilePath || !newFileContent" @click="addFile">
-              + {{ t('tools.codebase-context-packer.add-btn', 'Add File to Context') }}
+              + {{ t('tools.codebase-context-packer.add-file-btn') }}
             </c-button>
           </div>
         </c-card>
       </div>
 
       <!-- Packed Result Output -->
-      <c-card :title="t('tools.codebase-context-packer.output-title', 'Packed Context for LLM')">
+      <c-card :title="t('tools.codebase-context-packer.output-title')">
         <template #header-extra>
           <div flex gap-2>
             <n-tag type="info" size="small" round>
@@ -228,10 +239,10 @@ function downloadContext() {
           </span>
           <div flex gap-2>
             <c-button size="small" :disabled="!packedResult.packedContent" @click="downloadContext">
-              💾 {{ t('tools.codebase-context-packer.download', 'Download (.txt)') }}
+              💾 {{ t('tools.codebase-context-packer.download-txt') }}
             </c-button>
             <c-button type="primary" :disabled="!packedResult.packedContent" @click="copy()">
-              {{ t('tools.codebase-context-packer.copy', 'Copy All Context') }}
+              {{ t('tools.codebase-context-packer.copy-context') }}
             </c-button>
           </div>
         </div>

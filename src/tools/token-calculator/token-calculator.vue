@@ -8,17 +8,17 @@ const promptText = ref('');
 
 const analysis = computed(() => analyzeTextTokens(promptText.value));
 
-const PRESET_SAMPLES = [
+const presetSamples = computed(() => [
   {
-    name: 'English Prompt',
+    name: t('tools.token-calculator.preset-english'),
     text: 'You are an expert AI software architect. Analyze the trade-offs of microservices versus modular monoliths for a high-throughput financial system, considering latency, operational overhead, and distributed transactions.',
   },
   {
-    name: 'Chinese Prompt',
+    name: t('tools.token-calculator.preset-chinese'),
     text: '你是一位资深分布式系统架构师。请深入分析微服务架构与模块化单体架构在金融高频交易场景下的权衡取舍，重点阐述网络延迟、运维复杂度以及分布式事务一致性保证策略。',
   },
   {
-    name: 'Code Snippet',
+    name: t('tools.token-calculator.preset-code'),
     text: `async function fetchWithRetry(url: string, retries = 3, delay = 1000): Promise<Response> {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
@@ -33,7 +33,7 @@ const PRESET_SAMPLES = [
   throw new Error('Unreachable');
 }`,
   },
-];
+]);
 
 function applyPreset(text: string) {
   promptText.value = text;
@@ -41,18 +41,18 @@ function applyPreset(text: string) {
 
 const { copy } = useCopy({
   source: () => `${analysis.value.stats.baseTokens} tokens (Chars: ${analysis.value.stats.characters}, Words: ${analysis.value.stats.words})`,
-  text: 'Token statistics copied to clipboard',
+  text: t('tools.token-calculator.copied'),
   createToast: true,
 });
 </script>
 
 <template>
   <div>
-    <c-card :title="t('tools.token-calculator.input-title', 'Prompt / Input Text')">
+    <c-card :title="t('tools.token-calculator.input-title')">
       <div mb-3 flex flex-wrap gap-2>
-        <span self-center text-xs op-60>{{ t('tools.token-calculator.samples', 'Presets:') }}</span>
+        <span self-center text-xs op-60>{{ t('tools.token-calculator.samples') }}</span>
         <c-button
-          v-for="sample in PRESET_SAMPLES"
+          v-for="sample in presetSamples"
           :key="sample.name"
           size="small"
           @click="applyPreset(sample.text)"
@@ -64,14 +64,14 @@ const { copy } = useCopy({
           size="small"
           @click="promptText = ''"
         >
-          {{ t('tools.token-calculator.clear', 'Clear') }}
+          {{ t('tools.token-calculator.clear') }}
         </c-button>
       </div>
 
       <c-input-text
         v-model:value="promptText"
         multiline
-        :placeholder="t('tools.token-calculator.placeholder', 'Paste or type your prompt, code, or article here...')"
+        :placeholder="t('tools.token-calculator.placeholder')"
         rows="7"
         monospace
       />
@@ -79,58 +79,58 @@ const { copy } = useCopy({
       <!-- Quick Metrics -->
       <div grid grid-cols-2 mt-4 gap-3 md:grid-cols-4>
         <n-statistic
-          :label="t('tools.token-calculator.base-tokens', 'Estimated Tokens')"
+          :label="t('tools.token-calculator.base-tokens')"
           :value="analysis.stats.baseTokens"
         />
         <n-statistic
-          :label="t('tools.token-calculator.characters', 'Characters')"
+          :label="t('tools.token-calculator.characters')"
           :value="analysis.stats.characters"
         />
         <n-statistic
-          :label="t('tools.token-calculator.words', 'Words')"
+          :label="t('tools.token-calculator.words')"
           :value="analysis.stats.words"
         />
         <n-statistic
-          :label="t('tools.token-calculator.lines', 'Lines')"
+          :label="t('tools.token-calculator.lines')"
           :value="analysis.stats.lines"
         />
       </div>
 
       <div mt-3 flex items-center justify-between text-xs op-75>
         <span>
-          {{ t('tools.token-calculator.ratio', 'Tokens/Word') }}: {{ analysis.stats.tokensPerWord }} |
-          {{ t('tools.token-calculator.char-ratio', 'Tokens/Char') }}: {{ analysis.stats.tokensPerChar }} |
-          CJK: {{ analysis.stats.cjkCharacters }}
+          {{ t('tools.token-calculator.ratio') }}: {{ analysis.stats.tokensPerWord }} |
+          {{ t('tools.token-calculator.char-ratio') }}: {{ analysis.stats.tokensPerChar }} |
+          {{ t('tools.token-calculator.cjk-chars') }}: {{ analysis.stats.cjkCharacters }}
         </span>
         <c-button size="small" :disabled="!promptText" @click="copy()">
-          {{ t('tools.token-calculator.copy-stats', 'Copy Stats') }}
+          {{ t('tools.token-calculator.copy-stats') }}
         </c-button>
       </div>
     </c-card>
 
     <!-- Model Comparison Table -->
-    <c-card mt-4 :title="t('tools.token-calculator.models-title', 'Model Cost & Context Comparison')">
+    <c-card mt-4 :title="t('tools.token-calculator.models-title')">
       <div overflow-x-auto>
         <table w-full border-collapse text-left text-sm>
           <thead>
             <tr border-b border-neutral-200 dark:border-neutral-800>
               <th py-2 pr-4 font-semibold>
-                {{ t('tools.token-calculator.model', 'Model') }}
+                {{ t('tools.token-calculator.model') }}
               </th>
               <th px-3 py-2 font-semibold>
-                {{ t('tools.token-calculator.provider', 'Provider') }}
+                {{ t('tools.token-calculator.provider') }}
               </th>
               <th px-3 py-2 font-semibold>
-                {{ t('tools.token-calculator.tokens', 'Est. Tokens') }}
+                {{ t('tools.token-calculator.tokens') }}
               </th>
               <th px-3 py-2 font-semibold>
-                {{ t('tools.token-calculator.context-usage', 'Context %') }}
+                {{ t('tools.token-calculator.context-usage') }}
               </th>
               <th px-3 py-2 font-semibold>
-                {{ t('tools.token-calculator.input-cost', 'Input Cost ($)') }}
+                {{ t('tools.token-calculator.input-cost') }}
               </th>
               <th py-2 pl-3 font-semibold>
-                {{ t('tools.token-calculator.cached-cost', 'Cached Cost ($)') }}
+                {{ t('tools.token-calculator.cached-cost') }}
               </th>
             </tr>
           </thead>
@@ -172,7 +172,7 @@ const { copy } = useCopy({
         </table>
       </div>
       <div mt-3 text-xs op-60>
-        * Prices based on public 1M tokens standard API pricing. Token multipliers account for BPE tokenizer variations across model architectures.
+        {{ t('tools.token-calculator.footnote') }}
       </div>
     </c-card>
   </div>

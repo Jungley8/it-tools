@@ -42,13 +42,13 @@ const restoredOutput = computed(() => {
 
 const { copy: copyRedacted } = useCopy({
   source: () => redactResult.value.redactedText,
-  text: 'Redacted prompt copied to clipboard',
+  text: t('tools.prompt-redactor.copied-redacted'),
   createToast: true,
 });
 
 const { copy: copyRestored } = useCopy({
   source: () => restoredOutput.value,
-  text: 'Restored text copied to clipboard',
+  text: t('tools.prompt-redactor.copied-restored'),
   createToast: true,
 });
 
@@ -69,42 +69,42 @@ function loadSample() {
     <div mb-4 flex justify-center>
       <n-radio-group v-model:value="activeTab" size="medium">
         <n-radio-button value="redact">
-          {{ t('tools.prompt-redactor.tab-redact', '1. Redact Secrets (脱敏)') }}
+          {{ t('tools.prompt-redactor.tab-redact') }}
         </n-radio-button>
         <n-radio-button value="restore">
-          {{ t('tools.prompt-redactor.tab-restore', '2. Restore in AI Response (还原)') }}
+          {{ t('tools.prompt-redactor.tab-restore') }}
         </n-radio-button>
       </n-radio-group>
     </div>
 
     <!-- REDACT VIEW -->
     <div v-if="activeTab === 'redact'">
-      <c-card :title="t('tools.prompt-redactor.options-title', 'Detection Rules')">
+      <c-card :title="t('tools.prompt-redactor.options-title')">
         <div flex flex-wrap gap-4>
           <n-checkbox v-model:checked="options.apiKeys">
-            {{ t('tools.prompt-redactor.opt-apikeys', 'API Keys & Tokens') }}
+            {{ t('tools.prompt-redactor.opt-apikeys') }}
           </n-checkbox>
           <n-checkbox v-model:checked="options.emails">
-            {{ t('tools.prompt-redactor.opt-emails', 'Email Addresses') }}
+            {{ t('tools.prompt-redactor.opt-emails') }}
           </n-checkbox>
           <n-checkbox v-model:checked="options.ipAddresses">
-            {{ t('tools.prompt-redactor.opt-ips', 'IPv4 Addresses') }}
+            {{ t('tools.prompt-redactor.opt-ips') }}
           </n-checkbox>
           <n-checkbox v-model:checked="options.phoneNumbers">
-            {{ t('tools.prompt-redactor.opt-phones', 'Phone Numbers') }}
+            {{ t('tools.prompt-redactor.opt-phones') }}
           </n-checkbox>
           <n-checkbox v-model:checked="options.idCards">
-            {{ t('tools.prompt-redactor.opt-idcards', 'ID Cards') }}
+            {{ t('tools.prompt-redactor.opt-idcards') }}
           </n-checkbox>
         </div>
 
         <div mt-3>
           <div mb-1 text-xs op-75>
-            {{ t('tools.prompt-redactor.custom-keywords-label', 'Custom Keywords to mask (comma or newline separated):') }}
+            {{ t('tools.prompt-redactor.custom-keywords-label') }}
           </div>
           <c-input-text
             v-model:value="customKeywordsInput"
-            placeholder="e.g. MySecretProject, internal.corp.net"
+            :placeholder="t('tools.prompt-redactor.custom-keywords-placeholder')"
             size="small"
           />
         </div>
@@ -112,34 +112,34 @@ function loadSample() {
 
       <div grid grid-cols-1 mt-4 gap-4 lg:grid-cols-2>
         <!-- Raw Input -->
-        <c-card :title="t('tools.prompt-redactor.raw-title', 'Original Text / Prompt / Logs')">
+        <c-card :title="t('tools.prompt-redactor.raw-title')">
           <template #header-extra>
             <c-button size="small" @click="loadSample">
-              {{ t('tools.prompt-redactor.sample-btn', 'Load Sample') }}
+              {{ t('tools.prompt-redactor.sample-btn') }}
             </c-button>
           </template>
 
           <c-input-text
             v-model:value="rawInput"
             multiline
-            :placeholder="t('tools.prompt-redactor.raw-placeholder', 'Paste code, logs, or prompt containing sensitive credentials...')"
+            :placeholder="t('tools.prompt-redactor.raw-placeholder')"
             rows="10"
             monospace
           />
 
           <div mt-3 flex items-center justify-between text-xs op-75>
-            <span>{{ rawInput.length }} characters</span>
+            <span>{{ rawInput.length }} {{ t('tools.prompt-redactor.characters') }}</span>
             <c-button size="small" :disabled="!rawInput" @click="rawInput = ''">
-              {{ t('tools.prompt-redactor.clear', 'Clear') }}
+              {{ t('tools.prompt-redactor.clear') }}
             </c-button>
           </div>
         </c-card>
 
         <!-- Redacted Output -->
-        <c-card :title="t('tools.prompt-redactor.redacted-title', 'Safe Prompt for AI (Masked)')">
+        <c-card :title="t('tools.prompt-redactor.redacted-title')">
           <template #header-extra>
             <n-tag v-if="redactResult.stats.total > 0" type="success" size="small" round>
-              {{ redactResult.stats.total }} secrets masked
+              {{ redactResult.stats.total }} {{ t('tools.prompt-redactor.secrets-masked') }}
             </n-tag>
           </template>
 
@@ -147,24 +147,24 @@ function loadSample() {
             :value="redactResult.redactedText"
             multiline
             readonly
-            :placeholder="t('tools.prompt-redactor.redacted-placeholder', 'Masked result will appear here ready to paste into ChatGPT/Claude...')"
+            :placeholder="t('tools.prompt-redactor.redacted-placeholder')"
             rows="10"
             monospace
           />
 
           <div mt-3 flex items-center justify-between>
             <div flex flex-wrap gap-2 text-xs op-75>
-              <span v-if="redactResult.stats.apiKeys > 0">Keys: {{ redactResult.stats.apiKeys }}</span>
-              <span v-if="redactResult.stats.emails > 0">Emails: {{ redactResult.stats.emails }}</span>
-              <span v-if="redactResult.stats.ipAddresses > 0">IPs: {{ redactResult.stats.ipAddresses }}</span>
-              <span v-if="redactResult.stats.phoneNumbers > 0">Phones: {{ redactResult.stats.phoneNumbers }}</span>
+              <span v-if="redactResult.stats.apiKeys > 0">{{ t('tools.prompt-redactor.keys-count') }}: {{ redactResult.stats.apiKeys }}</span>
+              <span v-if="redactResult.stats.emails > 0">{{ t('tools.prompt-redactor.emails-count') }}: {{ redactResult.stats.emails }}</span>
+              <span v-if="redactResult.stats.ipAddresses > 0">{{ t('tools.prompt-redactor.ips-count') }}: {{ redactResult.stats.ipAddresses }}</span>
+              <span v-if="redactResult.stats.phoneNumbers > 0">{{ t('tools.prompt-redactor.phones-count') }}: {{ redactResult.stats.phoneNumbers }}</span>
             </div>
             <c-button
               type="primary"
               :disabled="!redactResult.redactedText"
               @click="() => { applyRedact(); copyRedacted(); }"
             >
-              {{ t('tools.prompt-redactor.copy-redacted', 'Save & Copy Safe Prompt') }}
+              {{ t('tools.prompt-redactor.copy-redacted') }}
             </c-button>
           </div>
         </c-card>
@@ -174,33 +174,33 @@ function loadSample() {
     <!-- RESTORE VIEW -->
     <div v-else>
       <div grid grid-cols-1 gap-4 lg:grid-cols-2>
-        <c-card :title="t('tools.prompt-redactor.ai-response-title', 'Paste AI Response (with {{REDACTED_...}} tags)')">
+        <c-card :title="t('tools.prompt-redactor.ai-response-title')">
           <c-input-text
             v-model:value="llmResponseInput"
             multiline
-            :placeholder="t('tools.prompt-redactor.ai-response-placeholder', 'Paste the response generated by AI containing {{REDACTED_API_KEY_1}} etc...')"
+            :placeholder="t('tools.prompt-redactor.ai-response-placeholder')"
             rows="12"
             monospace
           />
 
           <div mt-3 flex items-center justify-between text-xs op-75>
-            <span>Active Mappings: {{ Object.keys(savedMappings).length }} placeholders</span>
+            <span>{{ t('tools.prompt-redactor.active-mappings', { count: Object.keys(savedMappings).length }) }}</span>
             <c-button
               size="small"
               :disabled="Object.keys(savedMappings).length === 0"
               @click="savedMappings = {}"
             >
-              {{ t('tools.prompt-redactor.clear-mappings', 'Clear Mappings') }}
+              {{ t('tools.prompt-redactor.clear-mappings') }}
             </c-button>
           </div>
         </c-card>
 
-        <c-card :title="t('tools.prompt-redactor.restored-title', 'Restored Text (Original Credentials Restored)')">
+        <c-card :title="t('tools.prompt-redactor.restored-title')">
           <c-input-text
             :value="restoredOutput"
             multiline
             readonly
-            :placeholder="t('tools.prompt-redactor.restored-placeholder', 'Restored code and credentials will appear here...')"
+            :placeholder="t('tools.prompt-redactor.restored-placeholder')"
             rows="12"
             monospace
           />
@@ -211,7 +211,7 @@ function loadSample() {
               :disabled="!restoredOutput"
               @click="copyRestored()"
             >
-              {{ t('tools.prompt-redactor.copy-restored', 'Copy Restored Code') }}
+              {{ t('tools.prompt-redactor.copy-restored') }}
             </c-button>
           </div>
         </c-card>

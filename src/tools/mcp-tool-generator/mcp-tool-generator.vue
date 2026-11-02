@@ -90,7 +90,7 @@ const generatedCode = computed(() => {
 
 const { copy } = useCopy({
   source: () => generatedCode.value,
-  text: 'Tool specification copied to clipboard',
+  text: t('tools.mcp-tool-generator.copied'),
   createToast: true,
 });
 </script>
@@ -98,37 +98,37 @@ const { copy } = useCopy({
 <template>
   <div>
     <!-- Tool Basic Info -->
-    <c-card :title="t('tools.mcp-tool-generator.basic-info', 'Tool Identity')">
+    <c-card :title="t('tools.mcp-tool-generator.basic-info')">
       <div grid grid-cols-1 gap-4 md:grid-cols-2>
         <div>
           <div mb-1 text-xs font-semibold op-75>
-            {{ t('tools.mcp-tool-generator.tool-name', 'Tool Name (snake_case)') }}
+            {{ t('tools.mcp-tool-generator.tool-name') }}
           </div>
           <c-input-text
             v-model:value="toolName"
-            placeholder="e.g. search_database, send_slack_alert"
+            :placeholder="t('tools.mcp-tool-generator.tool-name-placeholder')"
             monospace
           />
         </div>
 
         <div>
           <div mb-1 text-xs font-semibold op-75>
-            {{ t('tools.mcp-tool-generator.tool-desc', 'Description (Crucial for Agent decision making)') }}
+            {{ t('tools.mcp-tool-generator.tool-desc') }}
           </div>
           <c-input-text
             v-model:value="toolDescription"
-            placeholder="Explain clearly what the tool does and when to call it..."
+            :placeholder="t('tools.mcp-tool-generator.tool-desc-placeholder')"
           />
         </div>
       </div>
     </c-card>
 
     <!-- Parameters Builder -->
-    <c-card mt-4 :title="t('tools.mcp-tool-generator.params-title', 'Parameters & Schema')">
+    <c-card mt-4 :title="t('tools.mcp-tool-generator.parameters-card')">
       <template #header-extra>
         <div flex items-center gap-2>
           <c-button size="small" @click="addParameter">
-            + {{ t('tools.mcp-tool-generator.add-param', 'Add Field') }}
+            + {{ t('tools.mcp-tool-generator.add-param-btn') }}
           </c-button>
         </div>
       </template>
@@ -136,14 +136,14 @@ const { copy } = useCopy({
       <!-- Quick infer box -->
       <div mb-4 rounded bg-neutral-50 p-3 dark:bg-neutral-900>
         <div mb-2 flex items-center justify-between text-xs op-75>
-          <span>{{ t('tools.mcp-tool-generator.infer-hint', 'Or paste sample JSON to auto-infer fields:') }}</span>
-          <c-button size="tiny" :disabled="!sampleJsonInput" @click="inferFromJson">
-            {{ t('tools.mcp-tool-generator.infer-btn', 'Infer Parameters') }}
+          <span>{{ t('tools.mcp-tool-generator.infer-card') }}</span>
+          <c-button size="small" :disabled="!sampleJsonInput" @click="inferFromJson">
+            {{ t('tools.mcp-tool-generator.infer-btn') }}
           </c-button>
         </div>
         <c-input-text
           v-model:value="sampleJsonInput"
-          placeholder="{&quot;city&quot;: &quot;Berlin&quot;, &quot;days&quot;: 3, &quot;includeHourly&quot;: true}"
+          :placeholder="t('tools.mcp-tool-generator.sample-json-placeholder')"
           size="small"
           monospace
         />
@@ -159,7 +159,7 @@ const { copy } = useCopy({
           <div w-36>
             <c-input-text
               v-model:value="param.name"
-              placeholder="Field name"
+              :placeholder="t('tools.mcp-tool-generator.param-name')"
               size="small"
               monospace
             />
@@ -176,14 +176,14 @@ const { copy } = useCopy({
           <div min-w-48 flex-1>
             <c-input-text
               v-model:value="param.description"
-              placeholder="Description / guidance for model"
+              :placeholder="t('tools.mcp-tool-generator.param-desc')"
               size="small"
             />
           </div>
 
           <div flex items-center gap-2>
             <n-checkbox v-model:checked="param.required" size="small">
-              {{ t('tools.mcp-tool-generator.required', 'Req') }}
+              {{ t('tools.mcp-tool-generator.param-required') }}
             </n-checkbox>
 
             <c-button size="small" @click="removeParameter(index)">
@@ -195,17 +195,17 @@ const { copy } = useCopy({
     </c-card>
 
     <!-- Code Output -->
-    <c-card mt-4 :title="t('tools.mcp-tool-generator.output-title', 'Generated Tool Contract')">
+    <c-card mt-4 :title="t('tools.mcp-tool-generator.output-title')">
       <template #header-extra>
         <n-radio-group v-model:value="outputFormat" size="small">
           <n-radio-button value="mcp">
-            Anthropic MCP Spec
+            {{ t('tools.mcp-tool-generator.format-mcp') }}
           </n-radio-button>
           <n-radio-button value="openai">
-            OpenAI Function
+            {{ t('tools.mcp-tool-generator.format-openai') }}
           </n-radio-button>
           <n-radio-button value="zod">
-            TypeScript / Zod
+            {{ t('tools.mcp-tool-generator.format-zod') }}
           </n-radio-button>
         </n-radio-group>
       </template>
@@ -220,7 +220,7 @@ const { copy } = useCopy({
 
       <div mt-3 flex justify-end>
         <c-button type="primary" @click="copy()">
-          {{ t('tools.mcp-tool-generator.copy', 'Copy Specification') }}
+          {{ t('tools.mcp-tool-generator.copy-code') }}
         </c-button>
       </div>
     </c-card>
