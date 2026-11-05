@@ -1,570 +1,566 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://it-tools.appio.fun/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/about</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/ascii-text-drawer</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/base-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/base64-file-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/base64-string-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/basic-auth-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/bcrypt</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/benchmark-builder</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/bip39-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/camera-recorder</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/case-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/chmod-calculator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/chronometer</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/codebase-context-packer</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/color-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/crontab-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/date-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/device-information</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/docker-run-to-docker-compose-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/email-normalizer</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/emoji-picker</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/encryption</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/eta-calculator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/git-memo</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/hash-text</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/hmac-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/html-entities</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/html-wysiwyg-editor</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/http-status-codes</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/iban-validator-and-parser</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/ipv4-address-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/ipv4-range-expander</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/ipv4-subnet-calculator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/ipv6-ula-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/json-diff</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/json-minify</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/json-prettify</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/json-to-csv</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/json-to-toml</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/json-to-xml</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/json-to-yaml-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/jwt-parser</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/keycode-info</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/list-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/lorem-ipsum-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/mac-address-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/mac-address-lookup</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/markdown-to-html</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/math-evaluator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/mcp-tool-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/mime-types</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/numeronym-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/og-meta-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/otp-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/password-strength-analyser</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/pdf-signature-checker</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/percentage-calculator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/phone-parser-and-formatter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/prompt-redactor</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/qrcode-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/random-port-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/regex-memo</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/regex-tester</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/roman-numeral-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/rsa-key-pair-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/safelink-decoder</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/slugify-string</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/sql-prettify</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/string-obfuscator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/svg-placeholder-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/temperature-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/text-diff</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/text-statistics</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/text-to-binary</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/text-to-nato-alphabet</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/text-to-unicode</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/token-calculator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/token-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/toml-to-json</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/toml-to-yaml</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/ulid-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/url-encoder</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/url-parser</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/user-agent-parser</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/uuid-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/web-to-llm-markdown</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/webmcp</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/wifi-qrcode-generator</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/xml-formatter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/xml-to-json</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/yaml-prettify</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/yaml-to-json-converter</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://it-tools.appio.fun/yaml-to-toml</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

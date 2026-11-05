@@ -43,15 +43,6 @@ const router = createRouter({
       },
       component: { render: () => null },
     },
-    {
-      path: '/sitemap.xml',
-      beforeEnter() {
-        if (typeof window !== 'undefined') {
-          window.location.replace('/sitemap.xml');
-        }
-      },
-      component: { render: () => null },
-    },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
   ],
 });
