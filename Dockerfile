@@ -1,11 +1,11 @@
-# build stage
-FROM node:lts-alpine AS build-stage
+# build stage: 使用 --platform=$BUILDPLATFORM 在宿主机原生架构编译前端，避免 QEMU arm64 仿真崩溃 (Illegal instruction)
+FROM --platform=$BUILDPLATFORM node:20-alpine AS build-stage
 # Set environment variables for non-interactive npm installs
 ENV NPM_CONFIG_LOGLEVEL warn
 ENV CI true
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm && pnpm i --frozen-lockfile
+RUN npm install -g pnpm@9.11.0 && pnpm i --frozen-lockfile
 COPY . .
 RUN pnpm build
 
