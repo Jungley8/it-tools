@@ -34,7 +34,7 @@ const { copy } = useCopy({ source: obfuscatedString });
       </div>
     </div>
 
-    <c-card v-if="obfuscatedString" mt-60px max-w-600px flex items-center gap-5px font-mono>
+    <c-card v-if="obfuscatedString" mt-60px w-full flex items-center gap-5px font-mono>
       <div break-anywhere text-wrap>
         {{ obfuscatedString }}
       </div>

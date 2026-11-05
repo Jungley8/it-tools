@@ -66,6 +66,12 @@ const toolDescription = computed<string>(() => t(`tools.${i18nKey.value}.descrip
 
 <style lang="less" scoped>
 .tool-content {
+  width: 80%;
+  min-width: min(600px, 100%);
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -74,7 +80,8 @@ const toolDescription = computed<string>(() => t(`tools.${i18nKey.value}.descrip
   gap: 16px;
 
   ::v-deep(& > *) {
-    flex: 0 1 600px;
+    flex: 1 1 600px;
+    max-width: 100%;
   }
 }
 
@@ -87,7 +94,9 @@ const toolDescription = computed<string>(() => t(`tools.${i18nKey.value}.descrip
 }
 
 .tool-layout {
-  max-width: 600px;
+  width: 80%;
+  min-width: min(600px, 100%);
+  max-width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
 

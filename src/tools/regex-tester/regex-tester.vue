@@ -91,7 +91,7 @@ watchEffect(
 </script>
 
 <template>
-  <div max-w-600px>
+  <div w-full>
     <c-card title="Regex" mb-1>
       <c-input-text
         v-model:value="regex"

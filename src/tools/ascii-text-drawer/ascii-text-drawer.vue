@@ -41,7 +41,7 @@ const fonts = ['1Row', '3-D', '3D Diagonal', '3D-ASCII', '3x5', '4Max', '5 Line 
 </script>
 
 <template>
-  <c-card style="max-width: 600px;">
+  <c-card>
     <c-input-text
       v-model:value="input"
       label="Your text:"
